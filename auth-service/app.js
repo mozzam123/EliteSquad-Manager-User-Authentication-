@@ -4,7 +4,7 @@ const path = require('path')
 const dotenv = require("dotenv");
 dotenv.config({ path: "./../config.env" });
 
-
+// Routes
 const authController = require("././routes/authRoutes")
 const apiRouter = require("././routes/apiRoute")
 
