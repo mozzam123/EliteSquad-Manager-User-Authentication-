@@ -5,10 +5,8 @@ const dotenv = require("dotenv");
 dotenv.config({ path: "./../config.env" });
 
 
-const loginRouter = require("././routes/loginRoute")
-const registerRouter = require("././routes/registerRoute")
+const authController = require("././routes/authRoutes")
 const apiRouter = require("././routes/apiRoute")
-
 
 
 // Serve static files from public directory
@@ -22,9 +20,8 @@ app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "views"))
 
 
-app.use("/", loginRouter)
+app.use("/", authController)
 app.use("/api", apiRouter)
-app.use('/register', registerRouter)
 
 
 module.exports = app;
