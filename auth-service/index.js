@@ -6,11 +6,13 @@ dotenv.config({ path: "./../config.env" });
 const userPort = process.env.USER_PORT;
 
 
-const webRouter = require("././routes/loginRoute")
+const loginRouter = require("././routes/loginRoute")
+const registerRouter = require("././routes/registerRoute")
 const apiRouter = require("././routes/apiRoute")
 
+
 // Serve static files from public directory
-app.use(express.static(path.join(__dirname, "public")))
+app.use(express.static(path.join(__dirname, "/src/public")))
 
 // Parse request bodies
 app.use(express.urlencoded({ extended: false }));
@@ -20,8 +22,9 @@ app.set("view engine", "hbs")
 app.set("views", path.join(__dirname, "views"))
 
 
-app.use("/", webRouter)
+app.use("/", loginRouter)
 app.use("/api", apiRouter)
+app.use('/register', registerRouter)
 
 
 app.listen(userPort, () => {
