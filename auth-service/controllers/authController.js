@@ -2,30 +2,63 @@ const userModel = require("./../src/models/userModel")
 
 
 
-exports.loginUser = async (req, res) => {
-    console.log("&&&&&&&&&&&&&", req.body.username);
+exports.getLoginPage = async (req, res) => {
     res.render("login")
 }
 
-exports.testUser = async (req, res) => {
-    console.log("&&&&&&&&&&&&&", req.body.username);
-    res.render("login")
+exports.postLoginUser = async (req, res) => {
+    try {
+        const existingUser = await userModel.findOne({
+            username: req.body.username,
+            password: req.body.password,
+        });
+
+        if (!existingUser) {
+            return res.render("login", { alredyExist: "Invalid credentials" });
+        }
+
+        res.render("home")
+
+    } catch (error) {
+        console.log("**********", error);
+        return res.render("login");
+    }
+
 }
 
 
-
-
-exports.getRegisterUser = async (req, res) => {
-    // username = req.body.username
-    // password = req.body.password
-    // console.log(username);
+exports.getRegisterPage = async (req, res) => {
     res.render("register")
 }
 
 
-exports.registerUser = async(req,res) =>{
-    username = req.body.username
-    password = req.body.password
-    console.log(username);
-    res.render("register")
+exports.postRegisterUser = async (req, res) => {
+    try {
+        const existingUser = await userModel.findOne({ username: req.body.username })
+        if (existingUser) {
+            return res.render("register", { existError: "Username or email already exists", });
+        } else {
+            const userData = new userModel({
+                username: req.body.username,
+                email: req.body.email,
+                password: req.body.password,
+            });
+            const savedData = await userData.save();
+            console.log(
+                `New user saved with usename: ${savedData.username} and password: ${savedData.password}`
+            );
+
+            res.render("register")
+        }
+
+    } catch (error) {
+        console.log("*****errors*****", error);
+        return res.render("register", { error: error.message });
+    }
+
+}
+
+
+exports.getHomePage = (req, res)  =>{
+    res.render('home')
 }

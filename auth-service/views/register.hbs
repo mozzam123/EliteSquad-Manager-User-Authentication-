@@ -28,8 +28,8 @@
                     <label for="first_name">Username</label>
                     <input type="text" class="form-control" value="" name="username" placeholder="">
                     <span id="name" class="text-danger font-weight-bold"></span>
-                    {{#if message}}
-                    <p>{{message}}</p>
+                    {{#if existError}}
+                    <p>{{existError}}</p>
                     {{/if}}
 
                 </div>
@@ -44,6 +44,7 @@
                     <input type="text" class="form-control" value="" name="password" placeholder="">
                     <span id="password" class="text-danger font-weight-bold"></span>
                 </div>
+                
 
                 <br>
                 <button class="btn btn-primary" type="submit">Save</button></a>
