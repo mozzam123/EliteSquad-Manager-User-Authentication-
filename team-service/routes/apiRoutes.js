@@ -1,9 +1,10 @@
 const express = require("express")
 const router = express.Router()
-const apiController = require("./../controllers/apiController")
+const playerApiController = require("../controllers/playerApiController")
 
 
-router.route('/create_player').post(apiController.createPlayer)
+router.route('/create_player').post(playerApiController.createPlayer)
+router.route('/delete').delete(playerApiController.deletePlayer)
 
 
 module.exports = router;
