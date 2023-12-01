@@ -1,29 +1,32 @@
 const Team = require("./../src/models/team")
 const Player = require("./../src/models/player")
+const { StatusCodes } = require('http-status-codes');
 
 
 
 exports.createPlayer = async (req, res) => {
     try {
-        response = {status: '', result: '', message: ''}
-        const playerName = req.body.name
-        const playerPosition = req.body.position
+        const { name: playerName, position: playerPosition } = req.body;
+        const existingPlayer = await Player.findOne({ name: playerName });
 
-        const existingPlayer = await Player.findOne({ name: playerName })
         if (existingPlayer) {
-            response['status'] = "error"
-            response['message'] = "Player already exists."
-            return res.status(400).json(response)
+            return res.status(StatusCodes.BAD_REQUEST).json({
+                status: 'error',
+                message: 'Player already exists.',
+            });
         }
+
         const playerData = new Player({
             name: playerName,
-            position: playerPosition
-        })
+            position: playerPosition,
+        });
 
-        const savedData = await playerData.save()
-        response['status'] = "success"
-        response['result'] = savedData
-        res.status(200).json(response)
+        const savedData = await playerData.save();
+        return res.status(StatusCodes.OK).json({
+            status: 'success',
+            message: 'Player created successfully.',
+            data: savedData,
+        });
 
     } catch (error) {
         console.error(error);
