@@ -13,7 +13,7 @@ const apiRouter = require("././routes/apiRoute")
 app.use(express.static(path.join(__dirname, "/src/public")))
 
 // Parse request bodies
-app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
 
 // Set view engine and template path
 app.set("view engine", "hbs")
