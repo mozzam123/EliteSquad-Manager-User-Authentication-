@@ -71,3 +71,20 @@ exports.getAllPlayers = async (req, res) => {
     }
 
 }
+
+exports.getPlayer = async (req, res) => {
+    try {
+        const player = await Player.findById(req.query.id)
+        return res.status(StatusCodes.OK).json({
+            status: "success",
+            result: player
+        })
+
+    } catch (error) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+            status: "error",
+            error: "Player does not exist"
+        })
+
+    }
+}
