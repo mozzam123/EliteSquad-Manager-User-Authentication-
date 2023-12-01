@@ -3,7 +3,7 @@ const Player = require("../src/models/player")
 const { StatusCodes } = require('http-status-codes');
 
 
-
+// Create Player
 exports.createPlayer = async (req, res) => {
     try {
         const { name: playerName, position: playerPosition } = req.body;
@@ -34,6 +34,7 @@ exports.createPlayer = async (req, res) => {
 
 }
 
+// Delete Player
 exports.deletePlayer = async (req, res) => {
 
     const existingPlayer = await Player.findByIdAndDelete(req.query.id)
@@ -53,6 +54,7 @@ exports.deletePlayer = async (req, res) => {
 
 }
 
+// Get All Players
 exports.getAllPlayers = async (req, res) => {
     try {
         const allPlayers = await Player.find()
@@ -72,6 +74,7 @@ exports.getAllPlayers = async (req, res) => {
 
 }
 
+// Get Single Player
 exports.getPlayer = async (req, res) => {
     try {
         const player = await Player.findById(req.query.id)
@@ -86,5 +89,27 @@ exports.getPlayer = async (req, res) => {
             error: "Player does not exist"
         })
 
+    }
+}
+
+// Update Player
+exports.updatePlayer = async (req, res) => {
+    try {
+        const updatePlayer = await Player.findByIdAndUpdate(req.query.id, req.body, {
+            new: true,
+            runValidators: true,
+        })
+
+        res.status(StatusCodes.ACCEPTED).json({
+            status: "Updated successfully",
+            result: updatePlayer
+
+        })
+
+    } catch (error) {
+        res.status(StatusCodes.BAD_REQUEST).json({
+            status: "error",
+            error: "Invalid Id"
+        })
     }
 }
