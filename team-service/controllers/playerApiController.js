@@ -6,8 +6,8 @@ const { StatusCodes } = require('http-status-codes');
 // Create Player
 exports.createPlayer = async (req, res) => {
     try {
-        const { name: playerName, position: playerPosition } = req.body;
-        const existingPlayer = await Player.findOne({ name: playerName });
+        const { name: name, position: playerPosition } = req.body;
+        const existingPlayer = await Player.findOne({ name: name });
 
         if (existingPlayer) {
             return res.status(StatusCodes.BAD_REQUEST).json({
@@ -17,7 +17,7 @@ exports.createPlayer = async (req, res) => {
         }
 
         const playerData = new Player({
-            name: playerName,
+            name: name,
             position: playerPosition,
         });
 
