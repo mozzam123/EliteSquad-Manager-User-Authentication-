@@ -3,7 +3,7 @@ const Player = require("../src/models/player");
 const { StatusCodes } = require("http-status-codes");
 
 
-const teamName = "Mozzam Team";
+const teamId =  "656db2482d0f0043fd8635f0"
 // Create Player
 exports.createPlayer = async (req, res) => {
   try {
@@ -34,18 +34,18 @@ exports.createPlayer = async (req, res) => {
 
     });
 
-    const savedPlayer = await playerData.save();
+    const savedPlayer  = await playerData.save();
 
     // Associate the player with the team
     await Team.findByIdAndUpdate(
-      { name: teamName },
+      teamId,
       { $push: { players: savedPlayer._id } },
       { new: true }
     );
 
-    res.status(StatusCodes.OK).json({
+     res.status(StatusCodes.OK).json({
       status: "success",
-      data: savedPlayer,
+      data: savedPlayer ,
     });
   } catch (error) {
     console.error(error);
