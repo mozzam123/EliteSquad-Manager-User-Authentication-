@@ -26,7 +26,6 @@ consumer.run({
 });
 
 
-
 exports.getHomePage = async (req, res) => {
     res.render('home', {latestUsername: latestUsername})
 }
