@@ -1,4 +1,12 @@
+process.env.KAFKAJS_NO_PARTITIONER_WARNING = 1
 const userModel = require("./../src/models/userModel")
+const { Kafka } = require("kafkajs");
+
+// Create kafka producer instance
+const kafka = new Kafka({
+    brokers: ["localhost:9092"]
+})
+const producer = kafka.producer()
 
 
 
@@ -7,16 +15,33 @@ exports.getLoginPage = async (req, res) => {
 }
 
 exports.postLoginUser = async (req, res) => {
+    const username = req.body.username
     try {
         const existingUser = await userModel.findOne({
-            username: req.body.username,
+            username: username,
             password: req.body.password,
         });
 
         if (!existingUser) {
             return res.render("login", { alredyExist: "Invalid credentials" });
         }
-        console.log("******************",req.user);
+        // Create message to be sent to Kafka topic
+        const message = {
+            username: username,
+            loggedIn: true,
+        };
+
+        // Send message to Kafka topic
+        await producer.connect()
+        console.log('Producer connected');
+        await producer.send({
+            topic: 'user-credentials',
+            messages: [{ value: JSON.stringify(message) }]
+        })
+        console.log(`Sent message to Kafka topic 'user-credentials': ${JSON.stringify(message)}`);
+        await producer.disconnect()
+        console.log('Disconnected Producer');
+
         res.render("home")
 
     } catch (error) {
@@ -51,7 +76,7 @@ exports.postRegisterUser = async (req, res) => {
             console.log(
                 `New user saved with usename: ${savedData.username} and password: ${savedData.password}`
             );
-            
+
             res.render("login")
         }
 
@@ -63,6 +88,6 @@ exports.postRegisterUser = async (req, res) => {
 }
 
 
-exports.getHomePage = (req, res)  =>{
+exports.getHomePage = (req, res) => {
     res.render('home')
 }
