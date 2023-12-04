@@ -9,7 +9,6 @@ const kafka = new Kafka({
 const producer = kafka.producer()
 
 
-
 exports.getLoginPage = async (req, res) => {
     res.render("login")
 }
@@ -42,7 +41,7 @@ exports.postLoginUser = async (req, res) => {
         await producer.disconnect()
         console.log('Disconnected Producer');
 
-        res.render("home")
+        res.redirect("http://127.0.0.1:2222/home")
 
     } catch (error) {
         console.log("**********", error);
