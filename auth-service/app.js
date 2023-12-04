@@ -3,6 +3,7 @@ const app = express();
 const path = require('path')
 const dotenv = require("dotenv");
 dotenv.config({ path: "./../config.env" });
+const bodyParser = require("body-parser")
 
 // Routes
 const authController = require("././routes/authRoutes")
@@ -13,7 +14,7 @@ const apiRouter = require("././routes/apiRoute")
 app.use(express.static(path.join(__dirname, "/src/public")))
 
 // Parse request bodies
-app.use(express.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set view engine and template path
 app.set("view engine", "hbs")

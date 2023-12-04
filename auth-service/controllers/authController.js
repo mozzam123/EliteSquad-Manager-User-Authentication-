@@ -16,7 +16,7 @@ exports.postLoginUser = async (req, res) => {
         if (!existingUser) {
             return res.render("login", { alredyExist: "Invalid credentials" });
         }
-
+        console.log("******************",req.user);
         res.render("home")
 
     } catch (error) {
@@ -34,6 +34,10 @@ exports.getRegisterPage = async (req, res) => {
 
 exports.postRegisterUser = async (req, res) => {
     try {
+        console.log(req.body.username);
+        console.log(req.body.email);
+        console.log(req.body.password);
+
         const existingUser = await userModel.findOne({ username: req.body.username })
         if (existingUser) {
             return res.render("register", { existError: "Username or email already exists", });
@@ -47,8 +51,8 @@ exports.postRegisterUser = async (req, res) => {
             console.log(
                 `New user saved with usename: ${savedData.username} and password: ${savedData.password}`
             );
-
-            res.render("register")
+            
+            res.render("login")
         }
 
     } catch (error) {
