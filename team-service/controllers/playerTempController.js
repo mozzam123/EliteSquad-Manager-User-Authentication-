@@ -36,5 +36,6 @@ consumer.run({
 
 exports.getHomePage = async (req, res) => {
     const userPlayers = await Player.find({ user: kafka_id })
-    res.render('home', { latestUsername: latestUsername })
+    console.log(userPlayers);
+    res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers })
 }
