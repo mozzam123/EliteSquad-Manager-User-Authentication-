@@ -1,4 +1,7 @@
 const { Kafka } = require("kafkajs");
+const Player = require("./../src/models/player")
+const Team = require("./../src/models/team")
+
 
 // Create Kafka consumer instance
 const kafka = new Kafka({
@@ -27,5 +30,7 @@ consumer.run({
 
 
 exports.getHomePage = async (req, res) => {
+    const userPlayers = await Player.find({name: latestUsername})
+    console.log(userPlayers);
     res.render('home', {latestUsername: latestUsername})
 }

@@ -26,8 +26,7 @@ exports.postLoginUser = async (req, res) => {
         }
         // Create message to be sent to Kafka topic
         const message = {
-            username: username,
-            loggedIn: true,
+            existingUser
         };
 
         // Send message to Kafka topic
