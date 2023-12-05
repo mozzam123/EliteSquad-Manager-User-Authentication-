@@ -26,9 +26,10 @@ exports.postLoginUser = async (req, res) => {
         }
         // Create message to be sent to Kafka topic
         const message = {
-            existingUser
+            id: existingUser._id,
+            username: existingUser.username,
         };
-
+        
         // Send message to Kafka topic
         await producer.connect()
         console.log('Producer connected');

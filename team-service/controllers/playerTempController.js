@@ -20,17 +20,21 @@ consumer.subscribe({ topic: "user-credentials" })
 console.log(`Subscribed to topic`);
 
 let latestUsername;
+let kafka_id
+
 consumer.run({
     eachMessage: async ({ message }) => {
-        const { username } = JSON.parse(message.value.toString());
+        const { id, username } = JSON.parse(message.value.toString());
+        kafka_id = id;
         latestUsername = username;
-        console.log(`Received message with username: ${username}`);
+        console.log(`Received message with username: ${latestUsername} and id: ${kafka_id}`);
     },
 });
 
 
+
+
 exports.getHomePage = async (req, res) => {
-    const userPlayers = await Player.find({name: latestUsername})
-    console.log(userPlayers);
-    res.render('home', {latestUsername: latestUsername})
+    const userPlayers = await Player.find({ user: kafka_id })
+    res.render('home', { latestUsername: latestUsername })
 }
