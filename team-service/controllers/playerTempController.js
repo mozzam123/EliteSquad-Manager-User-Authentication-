@@ -1,7 +1,7 @@
 const { Kafka } = require("kafkajs");
 const Player = require("./../src/models/player")
 const Team = require("./../src/models/team")
-
+const axios = require('axios');
 
 // Create Kafka consumer instance
 const kafka = new Kafka({
@@ -35,4 +35,21 @@ consumer.run({
 exports.getHomePage = async (req, res) => {
     const userPlayers = await Player.find({ user: kafka_id })
     res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers })
+}
+
+exports.getMatchPage = async (req, res) => {
+    const uri = 'https://api.football-data.org/v4/competitions/CL/matches';
+    const headers = { 'X-Auth-Token': '9c3ecd7fcda942eca3b7c09068ccc01f' };
+    try {
+        const response = await axios.get(uri, { headers });
+        const matches = response.data.matches;
+
+        // Render the football matches in a table using a Handlebars template
+        // res.render('matches', { matches });
+        res.send(matches)
+        console.log(matches);
+    } catch (error) {
+        console.error('Error fetching football matches:', error.message);
+        res.status(500).send('Internal Server Error');
+    }
 }
