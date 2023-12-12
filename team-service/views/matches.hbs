@@ -13,8 +13,10 @@
 
   <style>
     .scrollable-table {
-      max-height: 300px; /* Set the maximum height for the table body */
-      overflow-y: auto; /* Add a scrollbar when content overflows */
+      max-height: 300px;
+      /* Set the maximum height for the table body */
+      overflow-y: auto;
+      /* Add a scrollbar when content overflows */
     }
   </style>
 </head>
@@ -60,10 +62,64 @@
         </div>
       </div>
       <div class="col-6">
+        <h1>CL Standings</h1>
+        <div class="card">
+          <div class="card-body">
+            <div class="scrollable-table"> <!-- Wrap the table in a div with the scrollable-table class -->
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>Position</th>
+                    <th>Team</th>
+                    <th>Group</th>
+                    <th>MP</th>
+                    <th>W</th>
+                    <th>D</th>
+                    <th>L</th>
 
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each standings}}
+                  {{#each table}}
+                  <tr>
+                    <td>{{position}}</td>
+                    <td>{{team.shortName}}</td>
+                    <td>{{../group}}</td>
+                    <td>{{playedGames}}</td>
+                    <td>{{won}}</td>
+                    <td>{{draw}}</td>
+                    <td>{{lost}}</td>
+                    <!-- Adjust the path based on your data structure -->
+                    <!-- Add more columns as needed -->
+                  </tr>
+                  {{/each}}
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
       </div>
+
     </div>
+  </div>
   </div>
 </body>
 
 </html>
+
+{{!-- 
+<tbody>
+                  {{#each standings}}
+                  {{#each table}}
+                  <tr>
+                    <td>{{position}}</td>
+                    <td>{{../../stage}}</td>
+                    <!-- Adjust the path based on your data structure -->
+                    <!-- Add more columns as needed -->
+                  </tr>
+                  {{/each}}
+                  {{/each}}
+                </tbody> --}}
