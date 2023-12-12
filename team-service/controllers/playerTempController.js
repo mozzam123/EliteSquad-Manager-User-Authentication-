@@ -38,16 +38,15 @@ exports.getHomePage = async (req, res) => {
 }
 
 exports.getMatchPage = async (req, res) => {
-    const uri = 'https://api.football-data.org/v4/competitions/CL/matches';
+    const uri = 'https://api.football-data.org/v4/competitions/CL/matches?status=SCHEDULED';
     const headers = { 'X-Auth-Token': '9c3ecd7fcda942eca3b7c09068ccc01f' };
     try {
         const response = await axios.get(uri, { headers });
         const matches = response.data.matches;
+        console.log(matches.utcDate);
 
         // Render the football matches in a table using a Handlebars template
-        // res.render('matches', { matches });
-        res.send(matches)
-        console.log(matches);
+        res.render('matches', { matches });
     } catch (error) {
         console.error('Error fetching football matches:', error.message);
         res.status(500).send('Internal Server Error');
