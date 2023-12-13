@@ -19,6 +19,8 @@
                 <th>Nationality</th>
                 <th>Weight</th>
                 <th>Position</th>
+                <th>action</th>
+
             </tr>
         </thead>
         <tbody>
@@ -29,6 +31,7 @@
                     <td>{{nationality}}</td>
                     <td>{{weight}}</td>
                     <td>{{position}}</td>
+                    <td><button type="button" onclick="deleteTask('{{this._id}}')" class="btn btn-danger">Delete</button></td>
                 </tr>
             {{/each}}
         </tbody>

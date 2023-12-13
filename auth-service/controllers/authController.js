@@ -39,8 +39,9 @@ exports.postLoginUser = async (req, res) => {
                 messages: [{ value: JSON.stringify(message) }]
             });
             console.log(`Sent message to Kafka topic 'user-credentials': ${JSON.stringify(message)}`);
+            res.redirect("http://127.0.0.1:2222/home")
         } catch (kafkaError) {
-            // Handle Kafka error (you can log it or take any other appropriate action)
+            // Handle Kafka error 
             console.error('Error sending message to Kafka:', kafkaError.message);
         } finally {
             // Disconnect the Kafka producer even if there was an error
