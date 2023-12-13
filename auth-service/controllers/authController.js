@@ -29,19 +29,24 @@ exports.postLoginUser = async (req, res) => {
             id: existingUser._id,
             username: existingUser.username,
         };
-        
-        // Send message to Kafka topic
-        await producer.connect()
-        console.log('Producer connected');
-        await producer.send({
-            topic: 'user-credentials',
-            messages: [{ value: JSON.stringify(message) }]
-        })
-        console.log(`Sent message to Kafka topic 'user-credentials': ${JSON.stringify(message)}`);
-        await producer.disconnect()
-        console.log('Disconnected Producer');
 
-        res.redirect("http://127.0.0.1:2222/home")
+        try {
+            // Send message to Kafka topic
+            await producer.connect();
+            console.log('Producer connected');
+            await producer.send({
+                topic: 'user-credentials',
+                messages: [{ value: JSON.stringify(message) }]
+            });
+            console.log(`Sent message to Kafka topic 'user-credentials': ${JSON.stringify(message)}`);
+        } catch (kafkaError) {
+            // Handle Kafka error (you can log it or take any other appropriate action)
+            console.error('Error sending message to Kafka:', kafkaError.message);
+        } finally {
+            // Disconnect the Kafka producer even if there was an error
+            await producer.disconnect();
+            console.log('Disconnected Producer');
+        }
 
     } catch (error) {
         console.log("**********", error);
