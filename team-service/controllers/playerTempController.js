@@ -37,37 +37,6 @@ exports.getHomePage = async (req, res) => {
     res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers })
 }
 
-// exports.getCLData = async (req, res) => {
-//     const uri = 'https://api.football-data.org/v4/competitions/CL/matches?status=SCHEDULED';
-//     const headers = { 'X-Auth-Token': '9c3ecd7fcda942eca3b7c09068ccc01f' };
-//     try {
-//         const response = await axios.get(uri, { headers });
-//         const matches = response.data.matches;
-//         console.log(matches.utcDate);
-
-//         // Render the football matches in a table using a Handlebars template
-//         res.render('matches', { matches });
-//     } catch (error) {
-//         console.error('Error fetching football matches:', error.message);
-//         res.status(500).send('Internal Server Error');
-//     }
-// }
-
-
-// exports.getCLStandings = async (req, res) => {
-//     const uri = 'https://api.football-data.org/v4/competitions/CL/standings';
-//     const headers = { 'X-Auth-Token': '9c3ecd7fcda942eca3b7c09068ccc01f' };
-//     try {
-//         const response = await axios.get(uri, { headers });
-//         const standings = response.data.standings;
-
-//         // Render the football matches in a table using a Handlebars template
-//         res.render('matches', { standings });
-//     } catch (error) {
-//         console.error('Error fetching football matches:', error.message);
-//         res.status(500).send('Internal Server Error');
-//     }
-// }
 
 exports.getCLData = async (req, res) => {
     try {
