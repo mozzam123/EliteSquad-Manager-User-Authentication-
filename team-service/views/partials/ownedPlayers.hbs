@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Football Players</title>
     <link rel="stylesheet" href="css/ownedPlayers.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="js/ownedPlayers.js"></script>
 
 </head>
@@ -12,6 +13,9 @@
 
     <h2>{{latestUsername}}'s Players</h2>
     
+    <!-- Add "Create Player" button above the table -->
+    <button type="button" onclick="openCreatePlayerModal()" class="btn btn-primary" style="float: right; margin-top: 10px;margin-bottom: 10px; margin-right: 10px;">Create Player</button>
+
     <table>
         <thead>
             <tr>
@@ -20,7 +24,7 @@
                 <th>Nationality</th>
                 <th>Weight</th>
                 <th>Position</th>
-                <th>action</th>
+                <th>Action</th>
 
             </tr>
         </thead>
@@ -37,6 +41,88 @@
             {{/each}}
         </tbody>
     </table>
+
+    <!-- Modal for creating a new player -->
+    <div class="modal fade" id="createPlayerModal" tabindex="-1" role="dialog" aria-labelledby="createPlayerModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="createPlayerModalLabel">Create Player</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Form fields for creating a new player -->
+                    <form id="createPlayerForm">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" class="form-control" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="position">Position</label>
+                            <input type="text" class="form-control" id="position" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="height">Height</label>
+                            <input type="text" class="form-control" id="height" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="nationality">Nationality</label>
+                            <input type="text" class="form-control" id="nationality" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Weight</label>
+                            <input type="text" class="form-control" id="weight" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Create</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript to handle the modal and form submission -->
+    <script>
+        function openCreatePlayerModal() {
+            $('#createPlayerModal').modal('show');
+        }
+
+        document.getElementById('createPlayerForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+            createPlayer();
+        });
+
+        function createPlayer() {
+            // Get form values
+            var name = document.getElementById('name').value;
+            var position = document.getElementById('position').value;
+            var height = document.getElementById('height').value;
+            var nationality = document.getElementById('nationality').value;
+            var weight = document.getElementById('weight').value;
+
+            // Create player object
+            var newPlayer = {
+                "name": name,
+                "position": position,
+                "height": height,
+                "nationality": nationality,
+                "weight": weight,
+                "user": "6569631e738444d9987e170c"  // You may need to dynamically set the user ID
+            };
+
+            // TODO: Perform AJAX request to create a new player
+            // For simplicity, you can log the new player object for now
+            console.log("New Player:", newPlayer);
+
+            // Close the modal
+            $('#createPlayerModal').modal('hide');
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 </body>
 </html>
