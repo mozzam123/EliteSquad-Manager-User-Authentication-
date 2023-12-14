@@ -82,43 +82,6 @@
         </div>
     </div>
 
-    <!-- JavaScript to handle the modal and form submission -->
-    <script>
-        function openCreatePlayerModal() {
-            $('#createPlayerModal').modal('show');
-        }
-
-        document.getElementById('createPlayerForm').addEventListener('submit', function (event) {
-            event.preventDefault();
-            createPlayer();
-        });
-
-        function createPlayer() {
-            // Get form values
-            var name = document.getElementById('name').value;
-            var position = document.getElementById('position').value;
-            var height = document.getElementById('height').value;
-            var nationality = document.getElementById('nationality').value;
-            var weight = document.getElementById('weight').value;
-
-            // Create player object
-            var newPlayer = {
-                "name": name,
-                "position": position,
-                "height": height,
-                "nationality": nationality,
-                "weight": weight,
-                "user": "6569631e738444d9987e170c"  // You may need to dynamically set the user ID
-            };
-
-            // TODO: Perform AJAX request to create a new player
-            // For simplicity, you can log the new player object for now
-            console.log("New Player:", newPlayer);
-
-            // Close the modal
-            $('#createPlayerModal').modal('hide');
-        }
-    </script>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
