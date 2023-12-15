@@ -1,9 +1,10 @@
 const { Kafka } = require("kafkajs");
 const Player = require("./../src/models/player")
-const Team = require("./../src/models/team")
 const axios = require('axios');
+const { getRandomNumbers } = require("./../utils")
 
-// Create Kafka consumer instance
+
+
 const kafka = new Kafka({
     clientId: "team-service",
     brokers: ["localhost:9092"],
@@ -33,13 +34,39 @@ consumer.run({
 
 
 exports.getHomePage = async (req, res) => {
-    const userPlayers = await Player.find({ user: kafka_id })
-    res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers })
+    try {
+        const headers = { 'X-RapidAPI-Key': '6c8744c5aamsh7a00f50a6d205e5p1c8d33jsn4fbd2ac0aa26' };
+        const playerIds = getRandomNumbers()
+        const playerDataPromises = playerIds.map(async (id) => {
+            const playerUri = `https://api-football-beta.p.rapidapi.com/players?id=${id}&season=2015`;
+            const playerResponse = await axios.get(playerUri, { headers });
+            return playerResponse.data.response;
+        })
+
+        const playerDataArray = await Promise.all(playerDataPromises)
+        console.log('******************************');
+        console.log(playerDataArray);
+
+
+
+
+        // const players = playerResponse.data.response
+
+
+
+        const userPlayers = await Player.find({ user: kafka_id })
+        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers })
+
+    } catch (error) {
+        console.log('Error occurred: ', error);
+    }
+
 }
 
 
 exports.getCLData = async (req, res) => {
     try {
+
         const headers = { 'X-Auth-Token': '9c3ecd7fcda942eca3b7c09068ccc01f' };
         // Fetch CL Matches
         const matchesUri = 'https://api.football-data.org/v4/competitions/CL/matches?status=SCHEDULED';
@@ -50,10 +77,7 @@ exports.getCLData = async (req, res) => {
         const standingsUri = 'https://api.football-data.org/v4/competitions/CL/standings';
         const standingsResponse = await axios.get(standingsUri, { headers });
         const standings = standingsResponse.data.standings;
-        
 
-        
-    
         // Render the 'matches' template with both matches and standings data
         res.render('matches', { matches, standings });
     } catch (error) {

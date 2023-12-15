@@ -1,4 +1,6 @@
-function getRandomNumbers() {
+// utils.js
+
+const getRandomNumbers = () => {
   const min = 1;
   const max = 277;
   const count = 10;
@@ -11,3 +13,5 @@ function getRandomNumbers() {
   }
   return randomNumbers;
 }
+
+module.exports = { getRandomNumbers };
