@@ -44,15 +44,11 @@ exports.getHomePage = async (req, res) => {
         })
 
         const playerDataArray = await Promise.all(playerDataPromises)
-        console.log('******************************');
-        console.log(playerDataArray);
 
+        // Flatten the array of arrays
+        const flattenedPlayerData = playerDataArray.flat();
 
-
-
-        // const players = playerResponse.data.response
-
-
+        console.log(flattenedPlayerData);
 
         const userPlayers = await Player.find({ user: kafka_id })
         res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers })
