@@ -2,157 +2,157 @@ const { Kafka } = require("kafkajs");
 const Player = require("./../src/models/player")
 const axios = require('axios');
 const { getRandomNumbers } = require("./../utils")
-const allData = [
+let allData = [
     {
-      player: {
-        id: 48,
-        name: 'Saúl',
-        firstname: 'Saúl',
-        lastname: 'Ñíguez Esclapez',
-        age: 29,
-        birth: [Object],
-        nationality: 'Spain',
-        height: '184 cm',
-        weight: '76 kg',
-        injured: false,
-        photo: 'https://media-4.api-sports.io/football/players/48.png'
-      },
-      statistics: [ [Object], [Object], [Object], [Object] ]
+        player: {
+            id: 48,
+            name: 'Saúl',
+            firstname: 'Saúl',
+            lastname: 'Ñíguez Esclapez',
+            age: 29,
+            birth: [Object],
+            nationality: 'Spain',
+            height: '184 cm',
+            weight: '76 kg',
+            injured: false,
+            photo: 'https://media-4.api-sports.io/football/players/48.png'
+        },
+        statistics: [[Object], [Object], [Object], [Object]]
     },
     {
-      player: {
-        id: 153,
-        name: 'O. Dembélé',
-        firstname: 'Masour Ousmane',
-        lastname: 'Dembélé',
-        age: 26,
-        birth: [Object],
-        nationality: 'France',
-        height: '178 cm',
-        weight: '67 kg',
-        injured: false,
-        photo: 'https://media-4.api-sports.io/football/players/153.png'
-      },
-      statistics: [ [Object], [Object], [Object], [Object] ]
+        player: {
+            id: 153,
+            name: 'O. Dembélé',
+            firstname: 'Masour Ousmane',
+            lastname: 'Dembélé',
+            age: 26,
+            birth: [Object],
+            nationality: 'France',
+            height: '178 cm',
+            weight: '67 kg',
+            injured: false,
+            photo: 'https://media-4.api-sports.io/football/players/153.png'
+        },
+        statistics: [[Object], [Object], [Object], [Object]]
     },
     {
-      player: {
-        id: 2,
-        name: 'M. Hitz',
-        firstname: 'Marwin',
-        lastname: 'Hitz',
-        age: 36,
-        birth: [Object],
-        nationality: 'Switzerland',
-        height: '194 cm',
-        weight: '91 kg',
-        injured: false,
-        photo: 'https://media-4.api-sports.io/football/players/2.png'
-      },
-      statistics: [ [Object], [Object], [Object], [Object], [Object] ]
+        player: {
+            id: 2,
+            name: 'M. Hitz',
+            firstname: 'Marwin',
+            lastname: 'Hitz',
+            age: 36,
+            birth: [Object],
+            nationality: 'Switzerland',
+            height: '194 cm',
+            weight: '91 kg',
+            injured: false,
+            photo: 'https://media-4.api-sports.io/football/players/2.png'
+        },
+        statistics: [[Object], [Object], [Object], [Object], [Object]]
     },
     {
-      player: {
-        id: 225,
-        name: 'A. Behich',
-        firstname: 'Aziz',
-        lastname: 'Eraltay Behich',
-        age: 33,
-        birth: [Object],
-        nationality: 'Australia',
-        height: '170 cm',
-        weight: '63 kg',
-        injured: false,
-        photo: 'https://media-4.api-sports.io/football/players/225.png'
-      },
-      statistics: [ [Object], [Object], [Object], [Object] ]
+        player: {
+            id: 225,
+            name: 'A. Behich',
+            firstname: 'Aziz',
+            lastname: 'Eraltay Behich',
+            age: 33,
+            birth: [Object],
+            nationality: 'Australia',
+            height: '170 cm',
+            weight: '63 kg',
+            injured: false,
+            photo: 'https://media-4.api-sports.io/football/players/225.png'
+        },
+        statistics: [[Object], [Object], [Object], [Object]]
     },
     {
-      player: {
-        id: 139,
-        name: 'S. Umtiti',
-        firstname: 'Samuel Yves',
-        lastname: 'Umtiti',
-        age: 30,
-        birth: [Object],
-        nationality: 'France',
-        height: '182 cm',
-        weight: '75 kg',
-        injured: false,
-        photo: 'https://media-4.api-sports.io/football/players/139.png'
-      },
-      statistics: [
-        [Object], [Object],
-        [Object], [Object],
-        [Object], [Object],
-        [Object]
-      ]
+        player: {
+            id: 139,
+            name: 'S. Umtiti',
+            firstname: 'Samuel Yves',
+            lastname: 'Umtiti',
+            age: 30,
+            birth: [Object],
+            nationality: 'France',
+            height: '182 cm',
+            weight: '75 kg',
+            injured: false,
+            photo: 'https://media-4.api-sports.io/football/players/139.png'
+        },
+        statistics: [
+            [Object], [Object],
+            [Object], [Object],
+            [Object], [Object],
+            [Object]
+        ]
     },
     {
-      player: {
-        id: 167,
-        name: 'D. Rose',
-        firstname: 'Daniel Lee',
-        lastname: 'Rose',
-        age: 32,
-        birth: [Object],
-        nationality: 'England',
-        height: '173 cm',
-        weight: '72 kg',
-        injured: false,
-        photo: 'https://media-4.api-sports.io/football/players/167.png'
-      },
-      statistics: [ [Object], [Object], [Object], [Object], [Object] ]
+        player: {
+            id: 167,
+            name: 'D. Rose',
+            firstname: 'Daniel Lee',
+            lastname: 'Rose',
+            age: 32,
+            birth: [Object],
+            nationality: 'England',
+            height: '173 cm',
+            weight: '72 kg',
+            injured: false,
+            photo: 'https://media-4.api-sports.io/football/players/167.png'
+        },
+        statistics: [[Object], [Object], [Object], [Object], [Object]]
     },
     {
-      player: {
-        id: 192,
-        name: 'Dalbert Henrique',
-        firstname: 'Dalbert Henrique',
-        lastname: 'Chagas Estevão',
-        age: 30,
-        birth: [Object],
-        nationality: 'Brazil',
-        height: '181 cm',
-        weight: '70 kg',
-        injured: false,
-        photo: 'https://media-4.api-sports.io/football/players/192.png'
-      },
-      statistics: [ [Object], [Object], [Object], [Object] ]
+        player: {
+            id: 192,
+            name: 'Dalbert Henrique',
+            firstname: 'Dalbert Henrique',
+            lastname: 'Chagas Estevão',
+            age: 30,
+            birth: [Object],
+            nationality: 'Brazil',
+            height: '181 cm',
+            weight: '70 kg',
+            injured: false,
+            photo: 'https://media-4.api-sports.io/football/players/192.png'
+        },
+        statistics: [[Object], [Object], [Object], [Object]]
     },
     {
-      player: {
-        id: 241,
-        name: 'M. Sadílek',
-        firstname: 'Michal',
-        lastname: 'Sadílek',
-        age: 24,
-        birth: [Object],
-        nationality: 'Czechia',
-        height: '169 cm',
-        weight: '65 kg',
-        injured: false,
-        photo: 'https://media-4.api-sports.io/football/players/241.png'
-      },
-      statistics: [ [Object], [Object] ]
+        player: {
+            id: 241,
+            name: 'M. Sadílek',
+            firstname: 'Michal',
+            lastname: 'Sadílek',
+            age: 24,
+            birth: [Object],
+            nationality: 'Czechia',
+            height: '169 cm',
+            weight: '65 kg',
+            injured: false,
+            photo: 'https://media-4.api-sports.io/football/players/241.png'
+        },
+        statistics: [[Object], [Object]]
     },
     {
-      player: {
-        id: 108,
-        name: 'Cesc Fàbregas',
-        firstname: 'Francesc',
-        lastname: 'Fàbregas i Soler',
-        age: 36,
-        birth: [Object],
-        nationality: 'Spain',
-        height: '180 cm',
-        weight: '77 kg',
-        injured: false,
-        photo: 'https://media-4.api-sports.io/football/players/108.png'
-      },
-      statistics: [ [Object], [Object] ]
+        player: {
+            id: 108,
+            name: 'Cesc Fàbregas',
+            firstname: 'Francesc',
+            lastname: 'Fàbregas i Soler',
+            age: 36,
+            birth: [Object],
+            nationality: 'Spain',
+            height: '180 cm',
+            weight: '77 kg',
+            injured: false,
+            photo: 'https://media-4.api-sports.io/football/players/108.png'
+        },
+        statistics: [[Object], [Object]]
     }
-  ]
+]
 
 const kafka = new Kafka({
     clientId: "team-service",
@@ -194,13 +194,17 @@ exports.getHomePage = async (req, res) => {
 
         // const playerDataArray = await Promise.all(playerDataPromises)
 
-        // // Flatten the array of arrays
+        // Flatten the array of arrays
         // const flattenedPlayerData = playerDataArray.flat();
 
         // console.log(flattenedPlayerData);
 
+        flattenedPlayerData = allData
+        // console.log(flattenedPlayerData);
+
+
         const userPlayers = await Player.find({ user: kafka_id })
-        res.render('home', { latestUsername: latestUsername })
+        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData })
 
     } catch (error) {
         console.log('Error occurred: ', error);
