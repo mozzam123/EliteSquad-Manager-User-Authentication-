@@ -8,9 +8,9 @@ function clicked(name, height, nationality, weight) {
     var newPlayer = {
         "name": name,
         "position": "CF",
-        "height": `${height}cm`,
+        "height": height,
         "nationality": nationality,
-        "weight": `${weight}kg`,
+        "weight": weight,
         "user": "6569631e738444d9987e170c"  // You may need to dynamically set the user ID
     };
 
