@@ -10,15 +10,18 @@
                             <th>Height</th>
                             <th>Nationality</th>
                             <th>Weight</th>
+                            <th>Action</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         {{#each flattenedPlayerData}}
                             <tr>
-                                <td>{{this.player.name}}</td>
-                                <td>{{this.player.height}}</td>
+                                <td >{{this.player.name}}</td>
+                                <td >{{this.player.height}}</td>
                                 <td>{{this.player.nationality}}</td>
                                 <td>{{this.player.weight}}</td>
+                                <td><button type="button" class="btn btn-primary" onclick="clicked('{{this.player.name}}','{{this.player.height}}','{{this.player.nationality}}','{{this.player.weight}}')">Add</button></td>
                             </tr>
                         {{/each}}
                     </tbody>
