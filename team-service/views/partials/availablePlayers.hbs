@@ -16,17 +16,34 @@
                     </thead>
                     <tbody>
                         {{#each flattenedPlayerData}}
-                            <tr>
-                                <td >{{this.player.name}}</td>
-                                <td >{{this.player.height}}</td>
-                                <td>{{this.player.nationality}}</td>
-                                <td>{{this.player.weight}}</td>
-                                <td><button type="button" class="btn btn-primary" onclick="clicked('{{this.player.name}}','{{this.player.height}}','{{this.player.nationality}}','{{this.player.weight}}')">Add</button></td>
-                            </tr>
+                        <tr>
+                            <td>{{this.player.name}}</td>
+                            <td>{{this.player.height}}</td>
+                            <td>{{this.player.nationality}}</td>
+                            <td>{{this.player.weight}}</td>
+                            <td><button type="button" class="btn btn-primary"
+                                    onclick="clicked('{{this.player.name}}','{{this.player.height}}','{{this.player.nationality}}','{{this.player.weight}}')">Add</button>
+                            </td>
+                        </tr>
                         {{/each}}
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+    <!-- Modal -->
+    <div class="modal" id="errorModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Error</h5>
+                </div>
+                <div class="modal-body" id="modalMessage"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </div>

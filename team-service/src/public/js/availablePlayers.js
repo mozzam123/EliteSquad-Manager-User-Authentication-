@@ -24,6 +24,7 @@ function clicked(name, height, nationality, weight) {
     })
         .then(response => {
             if (!response.ok) {
+                showModal("Cannot add more than 7 Players")
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             window.location.reload()
@@ -34,4 +35,17 @@ function clicked(name, height, nationality, weight) {
 
         })
         .catch(error => console.error('Error:', error));
-    }
+}
+
+
+function showModal(message) {
+    // Set the modal message
+    document.getElementById('modalMessage').innerText = message;
+
+    // Show the modal
+    $('#errorModal').modal('show');
+}
+
+function closeModal() {
+    $('#errorModal').modal('hide');
+}
