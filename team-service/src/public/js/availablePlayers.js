@@ -11,10 +11,10 @@ function clicked(name, height, nationality, weight) {
         "height": height,
         "nationality": nationality,
         "weight": weight,
-        "user": "6569631e738444d9987e170c"  // You may need to dynamically set the user ID
+        "user": "658bc1437b708a916818b14e"  // You may need to dynamically set the user ID
     };
 
-    // Make AJAX request
+    // Make AJAX request to create or add a new player
     fetch('http://127.0.0.1:2222/api/player/create', {
         method: 'POST',
         headers: {

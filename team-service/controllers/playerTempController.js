@@ -202,7 +202,7 @@ exports.getHomePage = async (req, res) => {
         flattenedPlayerData = allData
         // console.log(flattenedPlayerData);
 
-        const temp_id = "6569631e738444d9987e170c"
+        const temp_id = "658bc1437b708a916818b14e"
         const userPlayers = await Player.find({ user: temp_id })
         res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData })
 
