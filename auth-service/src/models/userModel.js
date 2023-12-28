@@ -15,6 +15,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    balance: {
+        type: Number,
+        default: 1000
+    }
 });
 
 const User = mongoose.model('User', userSchema);

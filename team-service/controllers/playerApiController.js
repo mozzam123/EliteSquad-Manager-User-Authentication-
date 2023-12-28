@@ -3,7 +3,8 @@ const Player = require("../src/models/player");
 const { StatusCodes } = require("http-status-codes");
 
 
-const teamId =  "656db2482d0f0043fd8635f0"
+const teamId = "658bc2b753313be33640c011"
+
 // Create Player
 exports.createPlayer = async (req, res) => {
   try {
@@ -15,7 +16,9 @@ exports.createPlayer = async (req, res) => {
       weight: weight,
       user: user
     } = req.body;
+
     const existingPlayer = await Player.findOne({ name: name });
+    const playerCount = await Player.countDocuments({ user: user });
 
     if (existingPlayer) {
       return res.status(StatusCodes.BAD_REQUEST).json({
@@ -23,6 +26,14 @@ exports.createPlayer = async (req, res) => {
         message: "Player already exists.",
       });
     }
+
+    else if (playerCount > 7) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        status: "error",
+        message: "Cannot add more than 7 Players"
+      })
+    }
+
 
     const playerData = new Player({
       name: name,
@@ -34,7 +45,7 @@ exports.createPlayer = async (req, res) => {
 
     });
 
-    const savedPlayer  = await playerData.save();
+    const savedPlayer = await playerData.save();
 
     // Associate the player with the team
     await Team.findByIdAndUpdate(
@@ -43,9 +54,9 @@ exports.createPlayer = async (req, res) => {
       { new: true }
     );
 
-     res.status(StatusCodes.OK).json({
+    res.status(StatusCodes.OK).json({
       status: "success",
-      data: savedPlayer ,
+      data: savedPlayer,
     });
   } catch (error) {
     console.error(error);
