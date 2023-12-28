@@ -38,8 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
         "height": `${height}cm`,
         "nationality": nationality,
         "weight": `${weight}kg`,
-        "user": "6569631e738444d9987e170c"  // You may need to dynamically set the user ID
+        "user": "658bc1437b708a916818b14e"  // You may need to dynamically set the user ID
     };
+    
 
     // Make AJAX request
     fetch('http://127.0.0.1:2222/api/player/create', {
