@@ -28,6 +28,7 @@ exports.postLoginUser = async (req, res) => {
         const message = {
             id: existingUser._id,
             username: existingUser.username,
+            balance: existingUser.balance
         };
 
         try {
@@ -79,7 +80,7 @@ exports.postRegisterUser = async (req, res) => {
             });
             const savedData = await userData.save();
             console.log(
-                `New user saved with usename: ${savedData.username} and password: ${savedData.password} and amount:  ${userData.amount}`
+                `New user saved with usename: ${savedData.username} and password: ${savedData.password} and Balance:  ${userData.balance}`
             );
 
             res.render("login")
