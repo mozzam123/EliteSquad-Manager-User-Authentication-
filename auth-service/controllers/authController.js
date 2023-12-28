@@ -79,7 +79,7 @@ exports.postRegisterUser = async (req, res) => {
             });
             const savedData = await userData.save();
             console.log(
-                `New user saved with usename: ${savedData.username} and password: ${savedData.password}`
+                `New user saved with usename: ${savedData.username} and password: ${savedData.password} and amount:  ${userData.amount}`
             );
 
             res.render("login")
