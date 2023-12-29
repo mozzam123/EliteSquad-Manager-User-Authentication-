@@ -171,13 +171,15 @@ console.log(`Subscribed to topic`);
 
 let latestUsername;
 let kafka_id
+let kafka_balance
 
 consumer.run({
     eachMessage: async ({ message }) => {
-        const { id, username } = JSON.parse(message.value.toString());
+        const { id, username, balance } = JSON.parse(message.value.toString());
         kafka_id = id;
         latestUsername = username;
-        console.log(`Received message with username: ${latestUsername} and id: ${kafka_id}`);
+        kafka_balance = balance
+        console.log(`Received message with username: ${latestUsername} and id: ${kafka_id} and balance: ${kafka_balance}`);
     },
 });
 
@@ -204,7 +206,7 @@ exports.getHomePage = async (req, res) => {
 
         const temp_id = "658bc1437b708a916818b14e"
         const userPlayers = await Player.find({ user: temp_id })
-        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData })
+        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData, kafka_balance: kafka_balance })
 
     } catch (error) {
         console.log('Error occurred: ', error);
