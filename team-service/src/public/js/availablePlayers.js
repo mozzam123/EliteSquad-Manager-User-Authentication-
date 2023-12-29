@@ -13,9 +13,9 @@ function addPlayer(name, height, nationality, weight, amount) {
         "nationality": nationality,
         "weight": weight,
         "user": "658bc1437b708a916818b14e",  // You may need to dynamically set the user ID
-        // "amount": amount
+        "amount": amount
     };
-    console.log("amount: ",amount);
+    console.log(newPlayer);
 
     // Make AJAX request to create or add a new player
     fetch('http://127.0.0.1:2222/api/player/create', {
@@ -30,7 +30,8 @@ function addPlayer(name, height, nationality, weight, amount) {
                 showModal("Cannot add more than 7 Players")
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            window.location.reload()
+            // window.location.reload()
+            
         })
         .then(data => {
             // Handle the response data as needed

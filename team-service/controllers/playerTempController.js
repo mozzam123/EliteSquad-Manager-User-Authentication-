@@ -200,14 +200,24 @@ exports.getHomePage = async (req, res) => {
         // Flatten the array of arrays
         // const flattenedPlayerData = playerDataArray.flat();
 
-        // console.log(flattenedPlayerData);
         const randomAmt = getRandomAmounts()
 
-        flattenedPlayerData = allData
+        // Add the "amount" key-value pair to each player object
+        const allDataWithAmount = allData.map((player, index) => {
+            return {
+                ...player,
+                player: {
+                    ...player.player,
+                    amount: randomAmt[index].amount
+                }
+            };
+        });
+
+        flattenedPlayerData = allDataWithAmount
 
         const temp_id = "658bc1437b708a916818b14e"
         const userPlayers = await Player.find({ user: temp_id })
-        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData, kafka_balance: kafka_balance, randomAmt: randomAmt })
+        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData, kafka_balance: kafka_balance })
 
     } catch (error) {
         console.log('Error occurred: ', error);
