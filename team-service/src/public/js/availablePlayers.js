@@ -1,8 +1,9 @@
-function clicked(name, height, nationality, weight) {
+function addPlayer(name, height, nationality, weight, amount) {
     var name = name
     var height = height
     var nationality = nationality
     var weight = weight
+    var amount = amount
 
     // Create player object
     var newPlayer = {
@@ -11,8 +12,10 @@ function clicked(name, height, nationality, weight) {
         "height": height,
         "nationality": nationality,
         "weight": weight,
-        "user": "658bc1437b708a916818b14e"  // You may need to dynamically set the user ID
+        "user": "658bc1437b708a916818b14e",  // You may need to dynamically set the user ID
+        // "amount": amount
     };
+    console.log("amount: ",amount);
 
     // Make AJAX request to create or add a new player
     fetch('http://127.0.0.1:2222/api/player/create', {

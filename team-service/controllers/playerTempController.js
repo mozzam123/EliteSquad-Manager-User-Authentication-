@@ -1,7 +1,8 @@
 const { Kafka } = require("kafkajs");
 const Player = require("./../src/models/player")
 const axios = require('axios');
-const { getRandomNumbers } = require("./../utils")
+const { getRandomNumbers, getRandomAmounts } = require("./../utils")
+
 let allData = [
     {
         player: {
@@ -200,13 +201,13 @@ exports.getHomePage = async (req, res) => {
         // const flattenedPlayerData = playerDataArray.flat();
 
         // console.log(flattenedPlayerData);
+        const randomAmt = getRandomAmounts()
 
         flattenedPlayerData = allData
-        // console.log(flattenedPlayerData);
 
         const temp_id = "658bc1437b708a916818b14e"
         const userPlayers = await Player.find({ user: temp_id })
-        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData, kafka_balance: kafka_balance })
+        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData, kafka_balance: kafka_balance, randomAmt: randomAmt })
 
     } catch (error) {
         console.log('Error occurred: ', error);

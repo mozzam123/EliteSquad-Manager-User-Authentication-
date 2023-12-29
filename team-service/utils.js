@@ -1,4 +1,3 @@
-// utils.js
 
 const getRandomNumbers = () => {
   const min = 1;
@@ -14,4 +13,26 @@ const getRandomNumbers = () => {
   return randomNumbers;
 }
 
-module.exports = { getRandomNumbers };
+const getRandomAmounts = () => {
+  const min = 10
+  const max = 300
+  const count = 10
+
+  const randomAmounts = []
+
+  for (let i = 0; i < count; i++) {
+    let randomAmount = Math.floor(Math.random() * (max - min + 1)) + min;
+
+    const amtObject = {
+      amount: randomAmount
+    }
+    randomAmounts.push(amtObject)
+
+  }
+  return randomAmounts;
+}
+
+
+
+
+module.exports = { getRandomNumbers, getRandomAmounts };

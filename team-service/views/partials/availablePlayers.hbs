@@ -10,28 +10,38 @@
                             <th>Height</th>
                             <th>Nationality</th>
                             <th>Weight</th>
+                            <th>Amount</th>
                             <th>Action</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         {{#each flattenedPlayerData}}
+                        {{#with (lookup ../randomAmt @index)}}
+                        {{!-- Store amount in a variable --}}
+                        {{#if @index '===' 0}}
+                        {{#let playerAmount=amount}}{{/let}}
+                        {{/if}}
                         <tr>
                             <td>{{this.player.name}}</td>
                             <td>{{this.player.height}}</td>
                             <td>{{this.player.nationality}}</td>
                             <td>{{this.player.weight}}</td>
-                            <td><button type="button" class="btn btn-primary"
-                                    onclick="clicked('{{this.player.name}}','{{this.player.height}}','{{this.player.nationality}}','{{this.player.weight}}')">Add</button>
+                            <td>{{amount}}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary"
+                                    onclick="addPlayer('{{this.player.name}}','{{this.player.height}}','{{this.player.nationality}}','{{this.player.weight}}', {{playerAmount}})">Add</button>
                             </td>
                         </tr>
+                        {{/with}}
                         {{/each}}
                     </tbody>
+
                 </table>
             </div>
         </div>
     </div>
-    <!-- Modal for Player Restriction -->
+    <!-- Modal for Player Restriction -->ton
     <div class="modal" id="errorModal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
