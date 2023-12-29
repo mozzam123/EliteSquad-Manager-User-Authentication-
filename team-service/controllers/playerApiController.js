@@ -8,16 +8,9 @@ const teamId = "658bc2b753313be33640c011"
 // Create Player
 exports.createPlayer = async (req, res) => {
   try {
-    const {
-      name: name,
-      position: position,
-      height: height,
-      nationality: nationality,
-      weight: weight,
-      user: user
-    } = req.body;
+    const { name, user, } = req.body;
 
-    const existingPlayer = await Player.findOne({ name: name });
+    // const existingPlayer = await Player.findOne({ name: name });
     const playerCount = await Player.countDocuments({ user: user });
 
     if (existingPlayer) {
@@ -35,15 +28,7 @@ exports.createPlayer = async (req, res) => {
     }
 
 
-    const playerData = new Player({
-      name: name,
-      position: position,
-      height: height,
-      nationality: nationality,
-      weight: weight,
-      user: user
-
-    });
+    const playerData = new Player(req.body);
 
     const savedPlayer = await playerData.save();
 
