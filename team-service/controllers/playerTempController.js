@@ -179,7 +179,7 @@ consumer.run({
         const { id, username, balance } = JSON.parse(message.value.toString());
         kafka_id = id;
         latestUsername = username;
-        kafka_balance = balance
+        kafka_balance =  balance
         console.log(`Received message with username: ${latestUsername} and id: ${kafka_id} and balance: ${kafka_balance}`);
     },
 });

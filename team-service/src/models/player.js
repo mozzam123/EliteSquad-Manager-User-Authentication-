@@ -8,7 +8,7 @@ const playerSchema = new mongoose.Schema({
   nationality: { type: String, required: [true, "nationality field is required"] },
   weight: { type: String, required: [true, "weight field is required"] },
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-  amount: { type: String, required: true },
+  amount: { type: Number, required: [true, "amount field is required"] },
 });
 
 const Player = mongoose.model("Player", playerSchema);

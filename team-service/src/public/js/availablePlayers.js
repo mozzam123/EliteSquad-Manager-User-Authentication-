@@ -30,7 +30,7 @@ function addPlayer(name, height, nationality, weight, amount) {
                 showModal("Cannot add more than 7 Players")
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-            // window.location.reload()
+            window.location.reload()
             
         })
         .then(data => {

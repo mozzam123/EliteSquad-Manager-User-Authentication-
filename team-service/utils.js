@@ -22,6 +22,7 @@ const getRandomAmounts = () => {
 
   for (let i = 0; i < count; i++) {
     let randomAmount = Math.floor(Math.random() * (max - min + 1)) + min;
+    
 
     const amtObject = {
       amount: randomAmount
