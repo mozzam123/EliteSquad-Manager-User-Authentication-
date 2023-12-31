@@ -1,4 +1,3 @@
-process.env.KAFKAJS_NO_PARTITIONER_WARNING = 1
 const userModel = require("./../src/models/userModel")
 const { Kafka } = require("kafkajs");
 
