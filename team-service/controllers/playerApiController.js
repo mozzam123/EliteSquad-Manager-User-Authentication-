@@ -2,6 +2,31 @@ const Team = require("../src/models/team");
 const Player = require("../src/models/player");
 const { StatusCodes } = require("http-status-codes");
 const axios = require("axios");
+const { Kafka } = require("kafkajs");
+
+// Create kafka producer instance
+const kafka = new Kafka({
+  brokers: ["localhost:9092"]
+})
+const producer = kafka.producer()
+
+const sendPlayerCreatedEvent = async (player) => {
+  const message = {
+    id: player.user,
+    amount: player.amount,
+  };
+
+  await producer.connect();
+  console.log("producer connected");
+  await producer.send({
+    topic: 'player-created',
+    messages: [{ value: JSON.stringify(message) }],
+  });
+  console.log(`message is:  Id = ${message.id} and amount = ${message.amount} `);
+  await producer.disconnect();
+  console.log("producer Disconnected");
+};
+
 
 const teamId = "658bc2b753313be33640c011";
 
@@ -36,9 +61,9 @@ exports.createPlayer = async (req, res) => {
     let singleUser = await axios.get(
       `http://127.0.0.1:1111/api/getuser/${req.body.user}`
     );
-    // singleUser = singleUser.data.result.balance
 
     if (singleUser.data.result.balance < req.body.amount) {
+      console.log("Not Enough Balance");
       return res.status(StatusCodes.BAD_REQUEST).json({
         status: "error",
         message: "You dont't have enough amount",
@@ -63,6 +88,9 @@ exports.createPlayer = async (req, res) => {
       { $push: { players: savedPlayer._id } },
       { new: true }
     );
+
+    // Send player created event to Auth service
+    await sendPlayerCreatedEvent(savedPlayer);
 
     res.status(StatusCodes.OK).json({
       status: "success",
