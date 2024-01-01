@@ -1,6 +1,7 @@
 const Team = require("../src/models/team");
 const Player = require("../src/models/player");
 const { StatusCodes } = require("http-status-codes");
+const axios = require("axios");
 
 const teamId = "658bc2b753313be33640c011";
 
@@ -14,7 +15,7 @@ exports.createPlayer = async (req, res) => {
       nationality: nationality,
       weight: weight,
       user: user,
-      amount: amount
+      amount: amount,
     } = req.body;
 
     const existingPlayer = await Player.findOne({ name: name });
@@ -32,6 +33,18 @@ exports.createPlayer = async (req, res) => {
       });
     }
 
+    let singleUser = await axios.get(
+      `http://127.0.0.1:1111/api/getuser/${req.body.user}`
+    );
+    // singleUser = singleUser.data.result.balance
+
+    if (singleUser.data.result.balance < req.body.amount) {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        status: "error",
+        message: "You dont't have enough amount",
+      });
+    }
+
     const playerData = new Player({
       name: name,
       position: position,
@@ -39,7 +52,7 @@ exports.createPlayer = async (req, res) => {
       nationality: nationality,
       weight: weight,
       user: user,
-      amount: amount
+      amount: amount,
     });
 
     const savedPlayer = await playerData.save();
