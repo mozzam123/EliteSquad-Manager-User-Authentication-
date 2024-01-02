@@ -215,7 +215,7 @@ exports.getHomePage = async (req, res) => {
 
         flattenedPlayerData = allDataWithAmount
 
-        const temp_id = "658bc1437b708a916818b14e"
+        const temp_id = "658d61a30053dd5f669c8608"
         const userPlayers = await Player.find({ user: temp_id })
         res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData, kafka_balance: kafka_balance })
 

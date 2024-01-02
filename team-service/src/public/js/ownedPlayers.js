@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
         "height": `${height}cm`,
         "nationality": nationality,
         "weight": `${weight}kg`,
-        "user": "658bc1437b708a916818b14e"  // You may need to dynamically set the user ID
+        "user": "658d61a30053dd5f669c8608"  // You may need to dynamically set the user ID
     };
     
 
