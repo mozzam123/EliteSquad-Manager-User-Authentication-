@@ -35,7 +35,6 @@ const run = async () => {
     await consumer.connect();
     console.log("*************** consumer connected",);
     await consumer.subscribe({ topic: 'player-created', fromBeginning: false });
-    console.log("*************sybsxribd");
 
     await consumer.run({
         eachMessage: async ({ topic, partition, message }) => {

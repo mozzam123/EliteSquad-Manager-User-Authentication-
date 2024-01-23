@@ -1,6 +1,7 @@
-process.env.KAFKAJS_NO_PARTITIONER_WARNING = '1';
-const { Kafka, logLevel } = require('kafkajs');
+process.env.KAFKAJS_NO_PARTITIONER_WARNING = "1";
+const { Kafka, logLevel } = require("kafkajs");
 const Player = require("./../src/models/player");
+const { mongoose } = require("mongoose");
 const axios = require("axios");
 const { getRandomNumbers, getRandomAmounts } = require("./../utils");
 
@@ -162,7 +163,7 @@ let allData = [
 const kafka = new Kafka({
   clientId: "team-service",
   brokers: ["localhost:9092"],
-  logLevel: logLevel.WARN
+  logLevel: logLevel.WARN,
 });
 
 const consumer = kafka.consumer({
@@ -185,11 +186,8 @@ consumer.run({
     kafka_id = id;
     latestUsername = username;
     kafka_balance = balance;
-    // console.log(
-    //   `Received message with username: ${latestUsername} and id: ${kafka_id} and balance: ${kafka_balance}`
-    // );
     console.log(
-      `****** ${latestUsername} with type of ${typeof latestUsername}`
+      `Received message with username: ${latestUsername} and id: ${kafka_id} and balance: ${kafka_balance}`
     );
   },
 });
@@ -257,7 +255,8 @@ exports.getHomePage = async (req, res) => {
     flattenedPlayerData = allDataWithAmount;
 
     const temp_id = "658d61a30053dd5f669c8608";
-    const userPlayers = await Player.find({ user: latestUsername });
+    const userPlayers = await Player.find({ user: kafka_id });
+
     res.render("home", {
       latestUsername: latestUsername,
       userPlayers: userPlayers,

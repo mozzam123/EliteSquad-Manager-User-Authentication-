@@ -1,9 +1,11 @@
+process.env.KAFKAJS_NO_PARTITIONER_WARNING = '1';
 const userModel = require("./../src/models/userModel");
-const { Kafka } = require("kafkajs");
+const { Kafka, logLevel } = require('kafkajs');
 
 // Create kafka producer instance
 const kafka = new Kafka({
   brokers: ["localhost:9092"],
+  logLevel: logLevel.WARN
 });
 const producer = kafka.producer();
 
