@@ -183,58 +183,56 @@ consumer.run({
     kafka_id = id;
     latestUsername = username;
     kafka_balance = balance;
+    // console.log(
+    //   `Received message with username: ${latestUsername} and id: ${kafka_id} and balance: ${kafka_balance}`
+    // );
     console.log(
-      `Received message with username: ${latestUsername} and id: ${kafka_id} and balance: ${kafka_balance}`
+      `****** ${latestUsername} with type of ${typeof latestUsername}`
     );
   },
 });
 
 exports.getHomePage = async (req, res) => {
   try {
-//     const updateUserBalance = async (message) => {
-//       const userEvent = JSON.parse(message.value);
-//       const userId = userEvent.id;
-//       const playerAmount = userEvent.amount;
-//       console.log("kafka userid: ", userId);
-//       console.log("kafka playerAmount: ", playerAmount);
+    //     const updateUserBalance = async (message) => {
+    //       const userEvent = JSON.parse(message.value);
+    //       const userId = userEvent.id;
+    //       const playerAmount = userEvent.amount;
+    //       console.log("kafka userid: ", userId);
+    //       console.log("kafka playerAmount: ", playerAmount);
 
-//       // Fetch the user from the database
-//       const user = await userModel.findById(userId);
-//       if (!user) {
-//         console.error(`User with id ${userId} not found.`);
-//         return;
-//       }
-//       // Update the user's balance by deducting the player amount
-//       user.balance = user.balance - playerAmount;
-//       console.log("current user balance: ", user.balance);
-//       await user.save();
-//       console.log("saved User balance");
-//     };
+    //       // Fetch the user from the database
+    //       const user = await userModel.findById(userId);
+    //       if (!user) {
+    //         console.error(`User with id ${userId} not found.`);
+    //         return;
+    //       }
+    //       // Update the user's balance by deducting the player amount
+    //       user.balance = user.balance - playerAmount;
+    //       console.log("current user balance: ", user.balance);
+    //       await user.save();
+    //       console.log("saved User balance");
+    //     };
 
-//     const run = async () => {
-//       await consumer.connect();
-//       await consumer.subscribe({
-//         topic: "player-created",
-//         fromBeginning: false,
-//       });
-//       console.log("Subscribed To topic");
+    //     const run = async () => {
+    //       await consumer.connect();
+    //       await consumer.subscribe({
+    //         topic: "player-created",
+    //         fromBeginning: false,
+    //       });
+    //       console.log("Subscribed To topic");
 
-//       await consumer.run({
-//         eachMessage: async ({ topic, partition, message }) => {
-//           console.log({
-//             value: message.value.toString(),
-//           });
-//           await updateUserBalance(message);
-//         },
-//       });
-//     };
+    //       await consumer.run({
+    //         eachMessage: async ({ topic, partition, message }) => {
+    //           console.log({
+    //             value: message.value.toString(),
+    //           });
+    //           await updateUserBalance(message);
+    //         },
+    //       });
+    //     };
 
-//     run().catch(console.error);
-
-
-        const temp_id = "6593d99d916318fb234c20ad"
-        const userPlayers = await Player.find({ user: latestUsername })
-        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData, kafka_balance: kafka_balance })
+    //     run().catch(console.error);
 
     // const playerDataArray = await Promise.all(playerDataPromises)
 
@@ -257,7 +255,7 @@ exports.getHomePage = async (req, res) => {
     flattenedPlayerData = allDataWithAmount;
 
     const temp_id = "658d61a30053dd5f669c8608";
-    const userPlayers = await Player.find({ user: temp_id });
+    const userPlayers = await Player.find({ user: latestUsername });
     res.render("home", {
       latestUsername: latestUsername,
       userPlayers: userPlayers,
