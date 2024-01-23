@@ -232,13 +232,9 @@ exports.getHomePage = async (req, res) => {
 //     run().catch(console.error);
 
 
-    // const headers = { 'X-RapidAPI-Key': '6c8744c5aamsh7a00f50a6d205e5p1c8d33jsn4fbd2ac0aa26' };
-    // const playerIds = getRandomNumbers()
-    // const playerDataPromises = playerIds.map(async (id) => {
-    //     const playerUri = `https://api-football-beta.p.rapidapi.com/players?id=${id}&season=2015`;
-    //     const playerResponse = await axios.get(playerUri, { headers });
-    //     return playerResponse.data.response;
-    // })
+        const temp_id = "6593d99d916318fb234c20ad"
+        const userPlayers = await Player.find({ user: latestUsername })
+        res.render('home', { latestUsername: latestUsername, userPlayers: userPlayers, flattenedPlayerData: flattenedPlayerData, kafka_balance: kafka_balance })
 
     // const playerDataArray = await Promise.all(playerDataPromises)
 

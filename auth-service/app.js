@@ -4,6 +4,50 @@ const path = require('path')
 const dotenv = require("dotenv");
 dotenv.config({ path: "./../config.env" });
 const bodyParser = require("body-parser")
+const { Kafka } = require("kafkajs");
+const userModel  = require("./src/models/userModel")
+
+// Create kafka producer instance
+const kafka = new Kafka({
+    brokers: ["localhost:9092"]
+})
+
+const consumer = kafka.consumer({ groupId: 'auth-service' });
+
+const run = async () => {
+    const updateUserBalance = async (message) => {
+        const userEvent = JSON.parse(message.value)
+        const userId = userEvent.id
+        const playerAmount = userEvent.amount
+
+        // Fetch the user from the database
+        const user = await userModel.findById(userId)
+        if (!user) {
+            console.error(`User with id ${userId} not found.`);
+            return;
+        }
+        // Update the user's balance by deducting the player amount
+        user.balance = user.balance - playerAmount
+        await user.save()
+        console.log("Saved user balance");
+    }
+
+    await consumer.connect();
+    console.log("*************** consumer connected",);
+    await consumer.subscribe({ topic: 'player-created', fromBeginning: false });
+    console.log("*************sybsxribd");
+
+    await consumer.run({
+        eachMessage: async ({ topic, partition, message }) => {
+            console.log({
+                value: message.value.toString(),
+            });
+            await updateUserBalance(message);
+        },
+    });
+};
+
+run().catch(console.error);
 
 // Routes
 const authController = require("././routes/authRoutes")
