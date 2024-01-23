@@ -1,4 +1,5 @@
-const { Kafka } = require("kafkajs");
+process.env.KAFKAJS_NO_PARTITIONER_WARNING = '1';
+const { Kafka, logLevel } = require('kafkajs');
 const Player = require("./../src/models/player");
 const axios = require("axios");
 const { getRandomNumbers, getRandomAmounts } = require("./../utils");
@@ -161,6 +162,7 @@ let allData = [
 const kafka = new Kafka({
   clientId: "team-service",
   brokers: ["localhost:9092"],
+  logLevel: logLevel.WARN
 });
 
 const consumer = kafka.consumer({

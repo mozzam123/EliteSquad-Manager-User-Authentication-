@@ -1,4 +1,5 @@
 const Team = require("../src/models/team");
+process.env.KAFKAJS_NO_PARTITIONER_WARNING = '1';
 const Player = require("../src/models/player");
 const { StatusCodes } = require("http-status-codes");
 const axios = require("axios");
