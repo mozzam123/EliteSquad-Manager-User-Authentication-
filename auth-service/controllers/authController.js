@@ -6,7 +6,6 @@ const kafka = new Kafka({
     brokers: ["localhost:9092"]
 })
 const producer = kafka.producer()
-const consumer = kafka.consumer({ groupId: 'auth-service' });
 
 
 exports.getLoginPage = async (req, res) => {
@@ -95,36 +94,5 @@ exports.postRegisterUser = async (req, res) => {
 
 
 exports.getHomePage = (req, res) => {
-    const updateUserBalance = async (message) => {
-        const userEvent = JSON.parse(message.value)
-        const userId = userEvent.id
-        const playerAmount = userEvent.amount
-
-        // Fetch the user from the database
-        const user = await userModel.findById(userId)
-        if (!user) {
-            console.error(`User with id ${userId} not found.`);
-            return;
-        }
-        // Update the user's balance by deducting the player amount
-        user.balance = user.balance - playerAmount
-        await user.save()
-    }
-
-    const run = async () => {
-        await consumer.connect();
-        await consumer.subscribe({ topic: 'player-created', fromBeginning: false });
-
-        await consumer.run({
-            eachMessage: async ({ topic, partition, message }) => {
-                console.log({
-                    value: message.value.toString(),
-                });
-                await updateUserBalance(message);
-            },
-        });
-    };
-
-    run().catch(console.error);
     res.render('home')
 }

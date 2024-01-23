@@ -12,7 +12,7 @@ function addPlayer(name, height, nationality, weight, amount) {
     height: height,
     nationality: nationality,
     weight: weight,
-    user: "658bc1437b708a916818b14e", // You may need to dynamically set the user ID
+    user: "658d61a30053dd5f669c8608", // You may need to dynamically set the user ID
     amount: amount,
   };
   console.log(newPlayer);
