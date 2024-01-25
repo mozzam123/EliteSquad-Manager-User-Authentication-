@@ -1,15 +1,15 @@
 process.env.KAFKAJS_NO_PARTITIONER_WARNING = '1';
 const userModel = require("./../src/models/userModel");
 const { Kafka, logLevel } = require('kafkajs');
-const { authenticateUser } = require("./../utils")
+const { authenticateUser, sendKafkaMessage } = require("./../utils")
 const axios = require("axios")
 
-// Create kafka producer instance
-const kafka = new Kafka({
-  brokers: ["localhost:9092"],
-  logLevel: logLevel.WARN
-});
-const producer = kafka.producer();
+// // Create kafka producer instance
+// const kafka = new Kafka({
+//   brokers: ["localhost:9092"],
+//   logLevel: logLevel.WARN
+// });
+// const producer = kafka.producer();
 
 exports.getLoginPage = async (req, res) => {
   res.render("login");
@@ -19,15 +19,34 @@ exports.getLoginPage = async (req, res) => {
 exports.postLoginUser = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
+
   try {
+    console.log('******************runnng((((((((((((((((((((((((');
+    const existingUser = await authenticateUser(username, password)
+
+    if (!existingUser) {
+      return res.render("login", { alredyExist: "Invalid credentials" });
+    }
+
+    console.log(existingUser);
+
     const apiResponse = await axios.post("http://127.0.0.1:1111/api/login", {
       username,
       password
     })
 
     if (apiResponse.status == 200) {
+
+      const kafkaMessage = {
+        id: existingUser._id,
+        username: existingUser.username,
+        balance: existingUser.balance,
+      };
+
+      sendKafkaMessage("user-credentials", kafkaMessage)
       res.redirect("http://127.0.0.1:2222/home");
     }
+
 
   } catch (error) {
     console.log("**********", error);

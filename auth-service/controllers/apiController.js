@@ -11,7 +11,7 @@ exports.loginUser = async (req, res) => {
         if (!existingUser) {
             return res.status(401).json({ error: "Invalid Credentials!!" })
         }
-        return res.status(200).json({ message: "Login Successfull!!" })
+        return res.status(200).json({ message: existingUser })
     } catch (error) {
         console.log(error);
     }
