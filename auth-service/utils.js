@@ -1,14 +1,29 @@
 const User = require("./src/models/userModel")
+const { Kafka, logLevel } = require('kafkajs');
 
 
 // Authenticate User
 exports.authenticateUser = async (username, password) => {
     try {
-        const existingUser = await User.findOne({ username, password })
-        return existingUser
+        // check if User is present in DB
+        const existingUser = await User.findOne({ username });
+
+        if (existingUser && existingUser.password === password) {
+            return existingUser;
+        } else {
+            return null;
+        }
     } catch (error) {
-        throw error
+        throw error;
     }
 }
 
-// Send Kafka messge
+
+// Send kafk Message
+exports.sendKafkaMessage = async() =>{
+    try {
+        
+    } catch (error) {
+        
+    }
+}

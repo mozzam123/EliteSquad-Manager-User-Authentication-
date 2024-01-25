@@ -24,20 +24,16 @@ exports.postLoginUser = async (req, res) => {
       username,
       password
     })
-    console.log("**********", apiResponse.data)
 
+    if (apiResponse.status == 200) {
+      res.redirect("http://127.0.0.1:2222/home");
+    }
 
   } catch (error) {
-    if (error.response && error.response.status === 401) {
-      return res.render("login", { alredyExist: "Invalid credentials" });
-    } else {
-      console.log("**********", error);
-      return res.render("login");
-    }
+    console.log("**********", error);
+    return res.render("login", { alredyExist: "Invalid credentials" });
   }
 };
-
-
 
 
 

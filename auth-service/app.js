@@ -14,7 +14,7 @@ const kafka = new Kafka({
 
 
 // Parse request bodies
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 const consumer = kafka.consumer({ groupId: 'auth-service' });
 
