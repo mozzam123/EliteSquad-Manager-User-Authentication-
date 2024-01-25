@@ -1,6 +1,5 @@
 const User = require("./src/models/userModel")
-const { Kafka, logLevel } = require('kafkajs');
-
+const { kafkaProducer, kafkaConsumer } = require("./config/kafkaConfig")
 
 // Authenticate User
 exports.authenticateUser = async (username, password) => {
@@ -19,11 +18,17 @@ exports.authenticateUser = async (username, password) => {
 }
 
 
-// Send kafk Message
-exports.sendKafkaMessage = async() =>{
+// Send kafka Message
+exports.sendKafkaMessage = async (topic, message) => {
     try {
-        
+        await kafkaProducer.connect();
+        await kafkaProducer.send({ topic: topic, messages: [{ value: JSON.stringify(message) }] });
+        console.log(`Sent message to Kafka topic 'user-credentials': ${JSON.stringify(message)}`);
+
     } catch (error) {
-        
+        throw error
+    }
+    finally {
+        await kafkaProducer.disconnect()
     }
 }
