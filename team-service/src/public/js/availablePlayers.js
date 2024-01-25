@@ -1,9 +1,10 @@
-function addPlayer(name, height, nationality, weight, amount) {
+function addPlayer(name, height, nationality, weight, amount,userid) {
   var name = name;
   var height = height;
   var nationality = nationality;
   var weight = weight;
   var amount = amount;
+  var userid = userid;
 
   // Create player object
   var newPlayer = {
@@ -12,7 +13,7 @@ function addPlayer(name, height, nationality, weight, amount) {
     height: height,
     nationality: nationality,
     weight: weight,
-    user: "6593d99d916318fb234c20ad", // You may need to dynamically set the user ID
+    user: userid, // You may need to dynamically set the user ID
     amount: amount,
   };
   console.log(newPlayer);

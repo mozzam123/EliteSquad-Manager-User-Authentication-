@@ -12,6 +12,10 @@ const kafka = new Kafka({
     brokers: ["localhost:9092"]
 })
 
+
+// Parse request bodies
+// app.use(bodyParser.urlencoded({ extended: true }));
+
 const consumer = kafka.consumer({ groupId: 'auth-service' });
 
 const run = async () => {
@@ -56,8 +60,8 @@ const apiRouter = require("././routes/apiRoute")
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, "/src/public")))
 
-// Parse request bodies
-app.use(bodyParser.urlencoded({ extended: true }));
+// Middleware to parse JSON bodies
+app.use(express.json());
 
 // Set view engine and template path
 app.set("view engine", "hbs")

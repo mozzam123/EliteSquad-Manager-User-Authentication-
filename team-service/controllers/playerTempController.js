@@ -254,7 +254,7 @@ exports.getHomePage = async (req, res) => {
 
     flattenedPlayerData = allDataWithAmount;
 
-    const temp_id = "658d61a30053dd5f669c8608";
+    // const temp_id = "658d61a30053dd5f669c8608";
     const userPlayers = await Player.find({ user: kafka_id });
 
     res.render("home", {
@@ -262,6 +262,7 @@ exports.getHomePage = async (req, res) => {
       userPlayers: userPlayers,
       flattenedPlayerData: flattenedPlayerData,
       kafka_balance: kafka_balance,
+      userid: kafka_id
     });
     console.log("rendered from team service************");
   } catch (error) {

@@ -1,6 +1,8 @@
 process.env.KAFKAJS_NO_PARTITIONER_WARNING = '1';
 const userModel = require("./../src/models/userModel");
 const { Kafka, logLevel } = require('kafkajs');
+const { authenticateUser } = require("./../utils")
+const axios = require("axios")
 
 // Create kafka producer instance
 const kafka = new Kafka({
@@ -13,51 +15,74 @@ exports.getLoginPage = async (req, res) => {
   res.render("login");
 };
 
+
 exports.postLoginUser = async (req, res) => {
   const username = req.body.username;
+  const password = req.body.password;
   try {
-    const existingUser = await userModel.findOne({
-      username: username,
-      password: req.body.password,
-    });
+    const apiResponse = await axios.post("http://127.0.0.1:1111/api/login", {
+      username,
+      password
+    })
+    console.log("**********", apiResponse.data)
 
-    if (!existingUser) {
-      return res.render("login", { alredyExist: "Invalid credentials" });
-    }
-    // Create message to be sent to Kafka topic
-    const message = {
-      id: existingUser._id,
-      username: existingUser.username,
-      balance: existingUser.balance,
-    };
 
-    try {
-      // Send message to Kafka topic
-      await producer.connect();
-      console.log("Producer connected");
-      await producer.send({
-        topic: "user-credentials",
-        messages: [{ value: JSON.stringify(message) }],
-      });
-      console.log(
-        `Sent message to Kafka topic 'user-credentials': ${JSON.stringify(
-          message
-        )}`
-      );
-      res.redirect("http://127.0.0.1:2222/home");
-    } catch (kafkaError) {
-      // Handle Kafka error
-      console.error("Error sending message to Kafka:", kafkaError.message);
-    } finally {
-      // Disconnect the Kafka producer even if there was an error
-      await producer.disconnect();
-      console.log("Disconnected Producer");
-    }
   } catch (error) {
-    console.log("**********", error);
-    return res.render("login");
+    if (error.response && error.response.status === 401) {
+      return res.render("login", { alredyExist: "Invalid credentials" });
+    } else {
+      console.log("**********", error);
+      return res.render("login");
+    }
   }
 };
+
+
+
+
+
+// exports.postLoginUser = async (req, res) => {
+//   const username = req.body.username;
+//   try {
+//     const existingUser = await authenticateUser(username, req.body.password)
+
+//     if (!existingUser) {
+//       return res.render("login", { alredyExist: "Invalid credentials" });
+//     }
+//     // Create message to be sent to Kafka topic
+//     const message = {
+//       id: existingUser._id,
+//       username: existingUser.username,
+//       balance: existingUser.balance,
+//     };
+
+//     try {
+//       // Send message to Kafka topic
+//       await producer.connect();
+//       console.log("Producer connected");
+//       await producer.send({
+//         topic: "user-credentials",
+//         messages: [{ value: JSON.stringify(message) }],
+//       });
+//       console.log(
+//         `Sent message to Kafka topic 'user-credentials': ${JSON.stringify(
+//           message
+//         )}`
+//       );
+//       res.redirect("http://127.0.0.1:2222/home");
+//     } catch (kafkaError) {
+//       // Handle Kafka error
+//       console.error("Error sending message to Kafka:", kafkaError.message);
+//     } finally {
+//       // Disconnect the Kafka producer even if there was an error
+//       await producer.disconnect();
+//       console.log("Disconnected Producer");
+//     }
+//   } catch (error) {
+//     console.log("**********", error);
+//     return res.render("login");
+//   }
+// };
 
 exports.getRegisterPage = async (req, res) => {
   res.render("register");
