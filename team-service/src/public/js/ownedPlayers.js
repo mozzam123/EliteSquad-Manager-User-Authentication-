@@ -1,4 +1,6 @@
 
+
+// Function to Delete a Task
 function deleteTask(id) {
     fetch(`http://127.0.0.1:2222/api/player/delete?id=${id}`, {
         method: 'DELETE',
@@ -24,7 +26,8 @@ document.addEventListener('DOMContentLoaded', function () {
         createPlayer();
     });
 
-    function createPlayer() {
+    function createPlayer(userid) {
+    console.log('****************userid************: ', userid);
     var name = document.getElementById('name').value;
     var position = document.getElementById('position').value;
     var height = document.getElementById('height').value;

@@ -43,6 +43,9 @@ exports.createPlayer = async (req, res) => {
       user: user,
       amount: amount,
     } = req.body;
+
+    console.log('**** ',name);
+    console.log('**** ',user);
     console.log('****user variable: ',user);
 
     const existingPlayer = await Player.findOne({ name: name });

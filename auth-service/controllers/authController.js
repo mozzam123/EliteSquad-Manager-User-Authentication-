@@ -118,7 +118,7 @@ exports.postRegisterUser = async (req, res) => {
     }
 
   } catch (error) {
-    console.log("*****errors*****", error.data);
+    console.log("*****error in register user*****", error);
     return res.render("register", { existError: "User already exist" });
   }
 };
