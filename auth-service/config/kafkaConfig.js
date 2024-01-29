@@ -8,7 +8,8 @@ const kafkaProducer = new Kafka({
 
 // Create kafka producer instance
 const kafkaConsumer = new Kafka({
-    brokers: ["localhost:9092"]
+    brokers: ["localhost:9092"],
+    logLevel: logLevel.WARN
 }).consumer({ groupId: 'auth-service' })
 
 
