@@ -21,7 +21,6 @@ exports.postLoginUser = async (req, res) => {
   const password = req.body.password;
 
   try {
-    console.log('******************runnng((((((((((((((((((((((((');
     const existingUser = await authenticateUser(username, password)
 
     if (!existingUser) {

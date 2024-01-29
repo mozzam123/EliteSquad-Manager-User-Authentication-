@@ -1,5 +1,5 @@
 const User = require("./src/models/userModel")
-const { kafkaProducer, kafkaConsumer } = require("./config/kafkaConfig")
+const { kafkaProducer } = require("./config/kafkaConfig")
 
 // Authenticate User
 exports.authenticateUser = async (username, password) => {
@@ -32,3 +32,27 @@ exports.sendKafkaMessage = async (topic, message) => {
         await kafkaProducer.disconnect()
     }
 }
+
+// Update user Balance
+exports.updateUserBalance = async (message) => {
+    try {
+        const userEvent = JSON.parse(message.value);
+        const userId = userEvent.id;
+        const playerAmount = userEvent.amount;
+
+        // Fetch the user from the database
+        const user = await User.findById(userId);
+
+        if (!user) {
+            console.error(`User with id ${userId} not found.`);
+            return;
+        }
+
+        // Update the user's balance by deducting the player amount
+        user.balance = user.balance - playerAmount;
+        await user.save();
+        console.log("Saved user balance");
+    } catch (error) {
+        throw error;
+    }
+};

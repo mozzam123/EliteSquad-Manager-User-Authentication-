@@ -7,10 +7,11 @@ const kafkaProducer = new Kafka({
 }).producer()
 
 // Create kafka producer instance
-const kafkaConsumer = new Kafka({
-    brokers: ["localhost:9092"],
-    logLevel: logLevel.WARN
-}).consumer({ groupId: 'auth-service' })
+// const kafkaConsumer = new Kafka({
+//     brokers: ["localhost:9092"],
+//     logLevel: logLevel.WARN
+// }).consumer({ groupId: 'auth-service' })
 
 
-module.exports = { kafkaProducer, kafkaConsumer }
+// module.exports = { kafkaProducer, kafkaConsumer }
+module.exports = { kafkaProducer }
