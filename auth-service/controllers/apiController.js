@@ -18,6 +18,32 @@ exports.loginUser = async (req, res) => {
 
 }
 
+// Register user
+exports.registerUser = async (req, res) => {
+    try {
+        const existingUser = await authenticateUser(req.body.username, req.body.password)
+        if (existingUser) {
+            return res.status(404).json({ message: "User already Exist!!" })
+        }
+
+        const userData = new User({
+            username: req.body.username,
+            email: req.body.email,
+            password: req.body.password,
+        });
+        const savedData = await userData.save();
+        console.log(
+            `New user saved with username: ${savedData.username} and password: ${savedData.password} and Balance:  ${userData.balance}`
+        );
+
+        return res.status(200).json({ message: savedData })
+
+    } catch (error) {
+        console.log("*****Error in Register endpoint*****", error);
+        return res.status(400).json({ message: error })
+    }
+}
+
 
 
 // Get All User

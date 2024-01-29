@@ -102,18 +102,15 @@ exports.getRegisterPage = async (req, res) => {
   res.render("register");
 };
 
+
+
 exports.postRegisterUser = async (req, res) => {
   try {
-    console.log(req.body.username);
-    console.log(req.body.email);
-    console.log(req.body.password);
 
-    const existingUser = await userModel.findOne({
-      username: req.body.username,
-    });
+    const existingUser = await authenticateUser(req.body.username, req.body.password)
     if (existingUser) {
       return res.render("register", {
-        existError: "Username or email already exists",
+        existError: "Username already exists",
       });
     } else {
       const userData = new userModel({
@@ -121,7 +118,7 @@ exports.postRegisterUser = async (req, res) => {
         email: req.body.email,
         password: req.body.password,
       });
-      const savedData = await userData.save();
+      // const savedData = await userData.save();
       console.log(
         `New user saved with usename: ${savedData.username} and password: ${savedData.password} and Balance:  ${userData.balance}`
       );
@@ -133,6 +130,12 @@ exports.postRegisterUser = async (req, res) => {
     return res.render("register", { error: error.message });
   }
 };
+
+
+
+
+
+
 
 exports.getHomePage = (req, res) => {
   // const updateUserBalance = async (message) => {
