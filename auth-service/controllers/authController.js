@@ -22,6 +22,11 @@ exports.postLoginUser = async (req, res) => {
 
 
   try {
+    const existingUser = await authenticateUser(username, req.body.password)
+
+    if (!existingUser) {
+      return res.render("login", { alredyExist: "Invalid credentials" });
+    }
     const apiResponse = await axios.post("http://127.0.0.1:1111/api/login", {
       username,
       password
@@ -107,14 +112,14 @@ exports.postRegisterUser = async (req, res) => {
       password,
       email
     })
-    
-    if(apiResponse.status = 200){
+
+    if (apiResponse.status = 200) {
       return res.render("login")
     }
 
   } catch (error) {
     console.log("*****errors*****", error.data);
-    return res.render("register", { existError: "User already exist"});
+    return res.render("register", { existError: "User already exist" });
   }
 };
 

@@ -66,7 +66,4 @@ exports.getTeam = async (req, res) => {
         });
     }
 
-
-
-
 }
