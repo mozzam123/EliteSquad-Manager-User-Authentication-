@@ -78,6 +78,7 @@ $(document).ready(function () {
   });
 });
 
-function registerUser(){
-  console.log('********************ran the register function*************');
+function registerUser(data){
+  console.log(data);
+  let body = data
 }

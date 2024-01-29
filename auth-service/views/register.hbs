@@ -26,7 +26,7 @@
             <form id="myform" action="/register" class="bg-light" method="post">
                 <div class="form-group">
                     <label for="first_name">Username</label>
-                    <input type="text" class="form-control" value="" name="username" placeholder="">
+                    <input type="text" id= "txtusername" class="form-control" value="" name="username" placeholder="">
                     <span id="name" class="text-danger font-weight-bold"></span>
                     {{#if existError}}
                     <p>{{existError}}</p>
@@ -36,18 +36,18 @@
 
                 <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" value="" name="email" placeholder="">
+                    <input type="email" id= "txtemail" class="form-control" value="" name="email" placeholder="">
                     <span id="email" class="text-danger font-weight-bold"></span>
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="text" class="form-control" value="" name="password" placeholder="">
+                    <input type="text" id= "txtpassword" class="form-control" value="" name="password" placeholder="">
                     <span id="password" class="text-danger font-weight-bold"></span>
                 </div>
                 
 
                 <br>
-                <button class="btn btn-primary" onclick="registerUser()" type="submit">Save</button></a>
+                <button class="btn btn-primary" onclick="registerUser({'username': txtusername.value, 'email':txtemail.value, 'password': txtpassword.value })" type="submit">Save</button></a>
             </form>
         </div>
     </div>

@@ -20,15 +20,8 @@ exports.postLoginUser = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
 
+
   try {
-    const existingUser = await authenticateUser(username, password)
-
-    if (!existingUser) {
-      return res.render("login", { alredyExist: "Invalid credentials" });
-    }
-
-    console.log(existingUser);
-
     const apiResponse = await axios.post("http://127.0.0.1:1111/api/login", {
       username,
       password
@@ -48,7 +41,7 @@ exports.postLoginUser = async (req, res) => {
 
 
   } catch (error) {
-    console.log("**********", error);
+    console.log("Login Error: ", error);
     return res.render("login", { alredyExist: "Invalid credentials" });
   }
 };
@@ -105,29 +98,23 @@ exports.getRegisterPage = async (req, res) => {
 
 
 exports.postRegisterUser = async (req, res) => {
+  const username = req.body.username;
+  const password = req.body.password;
+  const email = req.body.email;
   try {
-
-    const existingUser = await authenticateUser(req.body.username, req.body.password)
-    if (existingUser) {
-      return res.render("register", {
-        existError: "Username already exists",
-      });
-    } else {
-      const userData = new userModel({
-        username: req.body.username,
-        email: req.body.email,
-        password: req.body.password,
-      });
-      // const savedData = await userData.save();
-      console.log(
-        `New user saved with usename: ${savedData.username} and password: ${savedData.password} and Balance:  ${userData.balance}`
-      );
-
-      res.render("login");
+    const apiResponse = await axios.post("http://127.0.0.1:1111/api/register", {
+      username,
+      password,
+      email
+    })
+    
+    if(apiResponse.status = 200){
+      return res.render("login")
     }
+
   } catch (error) {
-    console.log("*****errors*****", error);
-    return res.render("register", { error: error.message });
+    console.log("*****errors*****", error.data);
+    return res.render("register", { existError: "User already exist"});
   }
 };
 
