@@ -4,6 +4,7 @@ const Player = require("../src/models/player");
 const { StatusCodes } = require("http-status-codes");
 const axios = require("axios");
 const { Kafka } = require("kafkajs");
+const { sendKafkaMessage } = require("./../utils")
 
 // Create kafka producer instance
 const kafka = new Kafka({
@@ -17,15 +18,9 @@ const sendPlayerCreatedEvent = async (player) => {
     amount: player.amount,
   };
 
-  await producer.connect();
-  console.log("producer connected");
-  await producer.send({
-    topic: 'player-created',
-    messages: [{ value: JSON.stringify(message) }],
-  });
-  console.log(`message is:  Id = ${message.id} and amount = ${message.amount} `);
-  await producer.disconnect();
-  console.log("producer Disconnected");
+  // send Message to Kafka
+  sendKafkaMessage('player-created', message)
+  
 };
 
 

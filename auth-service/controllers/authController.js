@@ -1,15 +1,8 @@
 process.env.KAFKAJS_NO_PARTITIONER_WARNING = '1';
 const userModel = require("./../src/models/userModel");
-const { Kafka, logLevel } = require('kafkajs');
 const { authenticateUser, sendKafkaMessage } = require("./../utils")
 const axios = require("axios")
 
-// // Create kafka producer instance
-// const kafka = new Kafka({
-//   brokers: ["localhost:9092"],
-//   logLevel: logLevel.WARN
-// });
-// const producer = kafka.producer();
 
 exports.getLoginPage = async (req, res) => {
   res.render("login");

@@ -1,5 +1,7 @@
+const { kafkaProducer } = require("./config/kafkaProducer")
 
-const getRandomNumbers = () => {
+
+exports.getRandomNumbers = () => {
   const min = 1;
   const max = 277;
   const count = 10;
@@ -13,7 +15,7 @@ const getRandomNumbers = () => {
   return randomNumbers;
 }
 
-const getRandomAmounts = () => {
+exports.getRandomAmounts = () => {
   const min = 10
   const max = 300
   const count = 10
@@ -33,7 +35,18 @@ const getRandomAmounts = () => {
   return randomAmounts;
 }
 
+// Send kafka Message
+exports.sendKafkaMessage = async (topic, message) => {
+  try {
+    await kafkaProducer.connect();
+    await kafkaProducer.send({ topic: topic, messages: [{ value: JSON.stringify(message) }] });
+    console.log(`Sent message to Kafka topic 'player-created': ${JSON.stringify(message)}`);
 
+  } catch (error) {
+    throw error
+  }
+  finally {
+    await kafkaProducer.disconnect()
+  }
+}
 
-
-module.exports = { getRandomNumbers, getRandomAmounts };
