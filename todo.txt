@@ -1,0 +1,1 @@
+focus on solving the db linking for table like player, Team

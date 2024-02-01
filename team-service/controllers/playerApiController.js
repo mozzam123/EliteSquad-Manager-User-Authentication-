@@ -6,11 +6,11 @@ const axios = require("axios");
 const { Kafka } = require("kafkajs");
 const { sendKafkaMessage } = require("./../utils")
 
-// Create kafka producer instance
-const kafka = new Kafka({
-  brokers: ["localhost:9092"]
-})
-const producer = kafka.producer()
+// // Create kafka producer instance
+// const kafka = new Kafka({
+//   brokers: ["localhost:9092"]
+// })
+// const producer = kafka.producer()
 
 const sendPlayerCreatedEvent = async (player) => {
   const message = {
@@ -20,9 +20,9 @@ const sendPlayerCreatedEvent = async (player) => {
 
   // send Message to Kafka
   sendKafkaMessage('player-created', message)
-  
-};
 
+};
+ 
 
 const teamId = "658bc2b753313be33640c011";
 
