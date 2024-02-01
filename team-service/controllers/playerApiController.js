@@ -44,10 +44,6 @@ exports.createPlayer = async (req, res) => {
       amount: amount,
     } = req.body;
 
-    console.log('**** ',name);
-    console.log('**** ',user);
-    console.log('****user variable: ',user);
-
     const existingPlayer = await Player.findOne({ name: name });
     const playerCount = await Player.countDocuments({ user: user });
 
@@ -88,11 +84,11 @@ exports.createPlayer = async (req, res) => {
     const savedPlayer = await playerData.save();
 
     // Associate the player with the team
-    await Team.findByIdAndUpdate(
-      teamId,
-      { $push: { players: savedPlayer._id } },
-      { new: true }
-    );
+    // await Team.findByIdAndUpdate(
+    //   teamId,
+    //   { $push: { players: savedPlayer._id } },
+    //   { new: true }
+    // );
 
     // Send player created event to Auth service
     await sendPlayerCreatedEvent(savedPlayer);
