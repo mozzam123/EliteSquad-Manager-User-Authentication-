@@ -24,7 +24,10 @@
                             <td>{{this.player.weight}}</td>
                             <td>{{this.player.amount}}</td>
                             <td><button type="button" class="btn btn-primary"
-                                    onclick="addPlayer('{{this.player.name}}','{{this.player.height}}','{{this.player.nationality}}','{{this.player.weight}}','{{this.player.amount}}', '{{userid}}')">Add</button>
+                                    onclick="addPlayer('{{this.player.name}}', '{{this.player.height}}', '{{this.player.nationality}}', '{{this.player.weight}}', '{{this.player.amount}}', '{{../userid}}')">
+                                    Add
+                                </button>
+
                             </td>
                         </tr>
                         {{/each}}

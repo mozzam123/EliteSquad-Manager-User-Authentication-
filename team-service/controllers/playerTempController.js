@@ -264,7 +264,8 @@ exports.getHomePage = async (req, res) => {
       kafka_balance: kafka_balance,
       userid: kafka_id
     });
-    console.log("rendered from team service************");
+    console.log('Kafka id: ', kafka_id);
+    console.log("rendered Home page from team service************");
   } catch (error) {
     console.log("Error occurred: ", error);
   }

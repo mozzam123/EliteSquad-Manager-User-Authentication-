@@ -16,7 +16,7 @@ function addPlayer(name, height, nationality, weight, amount,userid) {
     user: userid, // You may need to dynamically set the user ID
     amount: amount,
   };
-  console.log(newPlayer);
+  console.log("New Player: *************",newPlayer);
 
   // Make AJAX request to create or add a new player
   fetch("http://127.0.0.1:2222/api/player/create", {
