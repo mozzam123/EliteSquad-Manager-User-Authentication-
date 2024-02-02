@@ -1,4 +1,5 @@
 const Team = require("./../src/models/team")
+const User = require("./../../auth-service/src/models/userModel")
 const { StatusCodes } = require("http-status-codes");
 
 // Get All Teams
@@ -22,33 +23,51 @@ exports.getAllTeams = async (req, res) => {
 exports.createTeam = async (req, res) => {
     try {
         // Use object destructuring directly with property names
-        const { name, owner, players } = req.body;
+        const { username, teamName } = req.body;
 
-        // Assuming you have a Team model (imported or defined elsewhere)
-        const team = new Team({
-            name: name,
-            owner: owner,
-            players: players
-        });
+        // Check if the team name already exists for the user
+        const user = await User.find({ username: username }).populate('teams');
+        const existingTeam = user.teams.find((team) => team.name === teamName);
+        if (existingTeam) {
+            return res.status(400).json({ message: 'Team name already exists for this user' });
+        }
 
-        // Save the team to the database
-        const savedTeam = await team.save();
+        // Create a new team and associate it with the user
+        const newTeam = await Team.create({ name: teamName });
+        user.teams.push(newTeam);
+        await user.save();
+        res.status(201).json({ message: 'Team created successfully' });
 
-        // Respond to the client after successfully saving to the database
-        res.status(StatusCodes.CREATED).json({
-            status: "success",
-            result: savedTeam
-        });
+
+
+        // // Assuming you have a Team model (imported or defined elsewhere)
+        // const team = new Team({
+        //     name: name,
+        //     owner: owner,
+        //     players: players
+        // });
+
+        // // Save the team to the database
+        // const savedTeam = await team.save();
+
+        // // Respond to the client after successfully saving to the database
+        // res.status(StatusCodes.CREATED).json({
+        //     status: "success",
+        //     result: savedTeam
+        // });
     } catch (error) {
         // Handle errors and respond with an error status and reason
-        res.status(StatusCodes.BAD_REQUEST).json({
-            status: "error",
-            reason: error.message // Use error.message to get a more informative error message
-        });
+        // res.status(StatusCodes.BAD_REQUEST).json({
+        //     status: "error",
+        //     reason: error.message // Use error.message to get a more informative error message
+        // });
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
     }
 };
 
 
+// Get Single Team
 exports.getTeam = async (req, res) => {
     try {
         const owner = req.body.owner
