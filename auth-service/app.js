@@ -21,8 +21,7 @@ app.set("views", path.join(__dirname, "views"));
 
 // Create kafka consumer instance
 const consumer = createConsumer('auth-service', ['player-created'], async ({ message }) => {
-    console.log({
-        value: message.value.toString(),
+    console.log("***** consumer message",{value: message.value.toString(),
     });
     await updateUserBalance(message);
 });

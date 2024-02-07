@@ -1,9 +1,7 @@
-const Team = require("../src/models/team");
 process.env.KAFKAJS_NO_PARTITIONER_WARNING = '1';
 const Player = require("../src/models/player");
 const { StatusCodes } = require("http-status-codes");
 const axios = require("axios");
-const { Kafka } = require("kafkajs");
 const { sendKafkaMessage } = require("./../utils")
 
 // // Create kafka producer instance
@@ -14,9 +12,10 @@ const { sendKafkaMessage } = require("./../utils")
 
 const sendPlayerCreatedEvent = async (player) => {
   const message = {
-    id: player.user,
+    id: player._id,
     amount: player.amount,
   };
+  console.log("***************sendPlayerCreatedEvent: ", message);
 
   // send Message to Kafka
   sendKafkaMessage('player-created', message)
@@ -84,9 +83,11 @@ exports.createPlayer = async (req, res) => {
     //   { $push: { players: savedPlayer._id } },
     //   { new: true }
     // );
-
+    console.log("***********saved player details");
+    console.log(savedPlayer);
     // Send player created event to Auth service
     await sendPlayerCreatedEvent(savedPlayer);
+
 
     res.status(StatusCodes.OK).json({
       status: "success",

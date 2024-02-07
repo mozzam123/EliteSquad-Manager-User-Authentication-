@@ -42,6 +42,8 @@ exports.updateUserBalance = async (message) => {
 
         // Fetch the user from the database
         const user = await User.findById(userId);
+        console.log("***************userId",userId);
+        console.log("***************playerAmount",playerAmount);
 
         if (!user) {
             console.error(`User with id ${userId} not found.`);
@@ -51,7 +53,7 @@ exports.updateUserBalance = async (message) => {
         // Update the user's balance by deducting the player amount
         user.balance = user.balance - playerAmount;
         await user.save();
-        console.log("Saved user balance");
+        console.log(" User balance Updated!!!!");
     } catch (error) {
         throw error;
     }
