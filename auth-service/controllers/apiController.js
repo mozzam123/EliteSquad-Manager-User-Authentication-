@@ -43,8 +43,6 @@ exports.registerUser = async (req, res) => {
     }
 }
 
-
-
 // Get All User
 exports.getAllUser = async (req, res) => {
     try {

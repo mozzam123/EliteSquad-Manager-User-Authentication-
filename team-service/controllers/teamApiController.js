@@ -24,6 +24,8 @@ exports.createTeam = async (req, res) => {
     try {
         // Use object destructuring directly with property names
         const { username, teamName } = req.body;
+        console.log(username);
+        console.log(teamName);
 
         // Check if the team name already exists for the user
         const user = await User.find({ username: username }).populate('teams');
@@ -61,8 +63,8 @@ exports.createTeam = async (req, res) => {
         //     status: "error",
         //     reason: error.message // Use error.message to get a more informative error message
         // });
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error(`Error in create new team ${error}`);
+        res.status(500).json({ message: `Error in create new team ${error}` });
     }
 };
 

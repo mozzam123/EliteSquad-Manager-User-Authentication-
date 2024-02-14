@@ -39,11 +39,10 @@ exports.updateUserBalance = async (message) => {
         const userEvent = JSON.parse(message.value);
         const userId = userEvent.id;
         const playerAmount = userEvent.amount;
+        console.log('***from updateuserbalane: ',userEvent );
 
         // Fetch the user from the database
         const user = await User.findById(userId);
-        console.log("***************userId",userId);
-        console.log("***************playerAmount",playerAmount);
 
         if (!user) {
             console.error(`User with id ${userId} not found.`);

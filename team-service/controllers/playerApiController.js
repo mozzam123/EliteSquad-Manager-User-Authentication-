@@ -12,7 +12,7 @@ const { sendKafkaMessage } = require("./../utils")
 
 const sendPlayerCreatedEvent = async (player) => {
   const message = {
-    id: player._id,
+    id: player.user,
     amount: player.amount,
   };
   console.log("***************sendPlayerCreatedEvent: ", message);
@@ -83,8 +83,8 @@ exports.createPlayer = async (req, res) => {
     //   { $push: { players: savedPlayer._id } },
     //   { new: true }
     // );
-    console.log("***********saved player details");
-    console.log(savedPlayer);
+    // console.log("***********saved player details");
+    // console.log(savedPlayer);
     // Send player created event to Auth service
     await sendPlayerCreatedEvent(savedPlayer);
 
@@ -160,6 +160,7 @@ exports.updatePlayer = async (req, res) => {
         runValidators: true,
       }
     );
+    console.log("&&&",updatePlayer);
 
     res.status(StatusCodes.ACCEPTED).json({
       status: "Updated successfully",

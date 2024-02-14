@@ -28,11 +28,12 @@ exports.postLoginUser = async (req, res) => {
     if (apiResponse.status == 200) {
 
       const kafkaMessage = {
-        id: existingUser._id,
+        id: existingUser.user,
         username: existingUser.username,
         balance: existingUser.balance,
       };
 
+      console.log('*******temp log****', kafkaMessage);
       sendKafkaMessage("user-credentials", kafkaMessage)
       res.redirect("http://127.0.0.1:2222/home");
     }
