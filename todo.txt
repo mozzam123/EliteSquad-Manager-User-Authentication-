@@ -1,3 +1,5 @@
 workin on create team endpoint
 
 https://github.com/mozzam123/EliteSquad-Manager/blob/13b52165c5c6339ad9d590abd67271beb38b54fb/team-service/src/models/team.js
+
+check templates working and check team api section 
